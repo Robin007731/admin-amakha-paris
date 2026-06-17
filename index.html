@@ -2,128 +2,253 @@
 <html lang="es">
 <head>
     <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no">
-    <title>Amakha Paris 360</title>
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Admin - Amakha Paris 360</title>
     <style>
         :root {
             --primary-text: #1d1d1f;
             --secondary-text: #86868b;
             --accent-color: #007aff;
-            --bg-gradient: linear-gradient(135deg, #fdfbfb 0%, #ebedee 100%);
-            --glass-bg: rgba(255, 255, 255, 0.7);
-            --glass-border: rgba(255, 255, 255, 0.4);
+            --danger-color: #ff3b30;
+            --bg-color: #f5f5f7;
+            --card-bg: #ffffff;
+            --border-color: #e5e5ea;
         }
 
-        * { box-sizing: border-box; margin: 0; padding: 0; font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, sans-serif; -webkit-tap-highlight-color: transparent; }
-        body { background: var(--bg-gradient); background-attachment: fixed; color: var(--primary-text); min-height: 100vh; padding-bottom: 80px; overflow-x: hidden; }
+        body { 
+            font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, sans-serif; 
+            padding: 20px; 
+            background: var(--bg-color); 
+            color: var(--primary-text);
+            margin: 0;
+        }
+
+        .admin-container {
+            max-width: 650px;
+            margin: 0 auto;
+        }
+
+        header {
+            text-align: center;
+            margin-bottom: 25px;
+        }
+
+        header h1 {
+            font-size: 26px;
+            font-weight: 700;
+            letter-spacing: -0.5px;
+            margin-bottom: 5px;
+        }
+
+        header p {
+            color: var(--secondary-text);
+            font-size: 14px;
+            margin: 0;
+        }
+
+        .admin-box { 
+            background: var(--card-bg); 
+            padding: 24px; 
+            border-radius: 16px; 
+            margin-bottom: 24px; 
+            box-shadow: 0 4px 20px rgba(0,0,0,0.05); 
+            border: 1px solid var(--border-color);
+        }
+
+        h2 { 
+            font-size: 18px;
+            font-weight: 600;
+            margin-top: 0; 
+            margin-bottom: 16px;
+            border-bottom: 1px solid var(--border-color);
+            padding-bottom: 10px;
+        }
+
+        .form-group {
+            margin-bottom: 14px;
+        }
+
+        label { 
+            font-size: 13px; 
+            color: var(--secondary-text); 
+            font-weight: 600; 
+            display: block; 
+            margin-bottom: 6px; 
+        }
+
+        input { 
+            padding: 12px; 
+            width: 100%; 
+            box-sizing: border-box; 
+            font-size: 15px; 
+            border-radius: 10px; 
+            border: 1px solid var(--border-color); 
+            background: #fafafa;
+            transition: border-color 0.2s;
+        }
+
+        input:focus {
+            outline: none;
+            border-color: var(--accent-color);
+            background: #fff;
+        }
+
+        button { 
+            padding: 14px; 
+            width: 100%; 
+            box-sizing: border-box; 
+            font-size: 15px; 
+            border-radius: 12px;
+            background: var(--accent-color); 
+            color: white; 
+            border: none; 
+            cursor: pointer; 
+            font-weight: 600; 
+            transition: background 0.2s, transform 0.1s; 
+        }
+
+        button:active { 
+            transform: scale(0.98); 
+        }
+
+        /* Vista previa de la foto */
+        .preview-box { 
+            display: none; 
+            text-align: center; 
+            margin: 15px 0; 
+            padding: 12px; 
+            border: 1px dashed var(--accent-color); 
+            border-radius: 10px; 
+            background: #f0f7ff; 
+        }
+        .preview-box img { 
+            max-width: 100px; 
+            max-height: 100px; 
+            object-fit: cover; 
+            border-radius: 8px; 
+            box-shadow: 0 2px 8px rgba(0,0,0,0.1); 
+        }
+
+        /* Lista de inventario */
+        .perfume-item { 
+            display: flex; 
+            justify-content: space-between; 
+            align-items: center; 
+            padding: 14px 0; 
+            border-bottom: 1px solid var(--border-color); 
+        }
         
-        .bg-shape { position: fixed; border-radius: 50%; filter: blur(60px); z-index: -1; }
-        .shape1 { width: 300px; height: 300px; background: rgba(255, 182, 193, 0.4); top: -50px; left: -50px; }
-        .shape2 { width: 250px; height: 250px; background: rgba(173, 216, 230, 0.4); bottom: 100px; right: -50px; }
+        .perfume-item:last-child {
+            border-bottom: none;
+        }
 
-        header { position: sticky; top: 0; z-index: 90; background: rgba(255, 255, 255, 0.7); backdrop-filter: blur(15px); -webkit-backdrop-filter: blur(15px); border-bottom: 1px solid var(--glass-border); padding: 20px; text-align: center; }
-        header h1 { font-size: 22px; font-weight: 700; letter-spacing: -0.5px; }
-        header p { font-size: 13px; color: var(--secondary-text); margin-top: 4px; }
-
-        .catalog-container { padding: 20px; display: grid; grid-template-columns: repeat(auto-fill, minmax(160px, 1fr)); gap: 16px; max-width: 800px; margin: 0 auto; }
-        .product-card { background: var(--glass-bg); backdrop-filter: blur(10px); -webkit-backdrop-filter: blur(10px); border: 1px solid var(--glass-border); border-radius: 20px; padding: 14px; box-shadow: 0 8px 32px rgba(0, 0, 0, 0.05); display: flex; flex-direction: column; transition: transform 0.2s ease; }
+        .perfume-item img { 
+            width: 52px; 
+            height: 52px; 
+            object-fit: cover; 
+            border-radius: 8px; 
+            margin-right: 14px; 
+            background: #f5f5f7; 
+        }
         
-        .product-image-container { width: 100%; aspect-ratio: 1 / 1; background: rgba(0, 0, 0, 0.04); border-radius: 12px; margin-bottom: 12px; overflow: hidden; display: flex; align-items: center; justify-content: center; }
-        .product-image-container img { width: 100%; height: 100%; object-fit: cover; }
+        .info-container { 
+            display: flex; 
+            align-items: center; 
+        }
 
-        .product-name { font-size: 15px; font-weight: 600; margin-bottom: 4px; white-space: nowrap; overflow: hidden; text-overflow: ellipsis; }
-        .product-price { font-size: 17px; font-weight: 700; margin-bottom: 8px; color: var(--primary-text); }
+        .info-details strong {
+            font-size: 15px;
+        }
 
-        .stock-badge { display: inline-block; padding: 4px 10px; border-radius: 20px; font-size: 11px; font-weight: 600; text-align: center; margin-bottom: 10px; }
-        .stock-high { background: rgba(52, 199, 89, 0.12); color: #248a3d; }
-        .stock-low { background: rgba(255, 149, 0, 0.12); color: #b36b00; }
-        .stock-out { background: rgba(255, 59, 48, 0.12); color: #c91c12; opacity: 0.6; }
-        .out-of-stock-card { opacity: 0.6; filter: grayscale(0.4); }
+        .info-details p {
+            margin: 3px 0 0 0;
+            font-size: 13px;
+            color: var(--secondary-text);
+        }
 
-        /* Botón Añadir Carrito */
-        .btn-add-cart { background: var(--accent-color); color: white; border: none; padding: 10px; border-radius: 12px; font-weight: 600; font-size: 13px; cursor: pointer; margin-top: auto; transition: background 0.2s, transform 0.1s; display: flex; align-items: center; justify-content: center; gap: 5px; }
-        .btn-add-cart:active { transform: scale(0.95); }
-        .btn-add-cart:disabled { background: #ccc; color: #666; cursor: not-allowed; transform: none; }
+        .actions { 
+            display: flex; 
+            gap: 6px; 
+        }
 
-        /* Botón Flotante del Carrito */
-        .cart-floating-btn { position: fixed; bottom: 24px; right: 24px; background: var(--primary-text); color: white; padding: 16px 20px; border-radius: 30px; font-weight: 600; box-shadow: 0 10px 25px rgba(0,0,0,0.2); z-index: 100; cursor: pointer; display: flex; align-items: center; gap: 8px; transition: transform 0.2s; }
-        .cart-floating-btn:active { transform: scale(0.92); }
-        .cart-badge { background: var(--accent-color); color: white; font-size: 12px; padding: 2px 8px; border-radius: 10px; font-weight: 700; }
+        .actions button { 
+            width: auto; 
+            padding: 8px 12px; 
+            margin: 0; 
+            font-size: 13px; 
+            border-radius: 8px;
+        }
 
-        /* Modal lateral del Carrito (Slide-out Drawer) */
-        .cart-modal { position: fixed; top: 0; right: -100%; width: 100%; max-width: 400px; height: 100vh; background: rgba(255, 255, 255, 0.85); backdrop-filter: blur(20px); -webkit-backdrop-filter: blur(20px); box-shadow: -10px 0 30px rgba(0,0,0,0.1); z-index: 200; transition: right 0.3s cubic-bezier(0.16, 1, 0.3, 1); display: flex; flex-direction: column; border-left: 1px solid var(--glass-border); }
-        .cart-modal.open { right: 0; }
+        .btn-inc { background: #e5e5ea; color: var(--primary-text); }
+        .btn-inc:hover { background: #d1d1d6; }
         
-        .cart-header { padding: 20px; border-bottom: 1px solid rgba(0,0,0,0.08); display: flex; justify-content: space-between; align-items: center; }
-        .cart-header h2 { font-size: 20px; font-weight: 700; }
-        .close-btn { background: none; border: none; font-size: 22px; cursor: pointer; color: var(--secondary-text); }
+        .btn-dec { background: #e5e5ea; color: var(--primary-text); }
+        .btn-dec:hover { background: #d1d1d6; }
 
-        .cart-items-container { flex: 1; overflow-y: auto; padding: 20px; display: flex; flex-direction: column; gap: 15px; }
-        .cart-item { display: flex; justify-content: space-between; align-items: center; padding-bottom: 15px; border-bottom: 1px solid rgba(0,0,0,0.05); }
-        .cart-item-info h4 { font-size: 15px; font-weight: 600; margin-bottom: 2px; }
-        .cart-item-info p { font-size: 13px; color: var(--secondary-text); }
-        
-        .cart-item-actions { display: flex; align-items: center; gap: 10px; }
-        .cart-item-actions button { background: white; border: 1px solid #ccc; width: 28px; height: 28px; border-radius: 50%; font-weight: 600; cursor: pointer; display: flex; align-items: center; justify-content: center; }
-        .cart-item-actions span { font-size: 14px; font-weight: 600; min-width: 15px; text-align: center; }
+        .btn-delete { background: var(--danger-color); }
+        .btn-delete:hover { background: #d9261c; }
 
-        .cart-footer { padding: 20px; border-top: 1px solid rgba(0,0,0,0.08); background: rgba(255,255,255,0.5); }
-        .cart-total-row { display: flex; justify-content: space-between; font-size: 18px; font-weight: 700; margin-bottom: 15px; }
-        .btn-checkout { background: #25D366; color: white; border: none; width: 100%; padding: 14px; border-radius: 16px; font-size: 16px; font-weight: 700; cursor: pointer; display: flex; align-items: center; justify-content: center; gap: 8px; box-shadow: 0 4px 12px rgba(37, 211, 102, 0.3); transition: background 0.2s; }
-        .btn-checkout:hover { background: #20ba59; }
-        .btn-checkout:disabled { background: #ccc; box-shadow: none; cursor: not-allowed; }
-
-        /* Fondo oscuro translúcido */
-        .cart-overlay { position: fixed; top: 0; left: 0; width: 100vw; height: 100vh; background: rgba(0,0,0,0.2); z-index: 150; display: none; backdrop-filter: blur(4px); }
-        .cart-overlay.open { display: block; }
+        @media (max-width: 600px) {
+            .perfume-item { flex-direction: column; align-items: flex-start; }
+            .perfume-item div:last-child { margin-top: 12px; width: 100%; }
+            .actions button { flex: 1; text-align: center; }
+        }
     </style>
 </head>
 <body>
 
-    <div class="bg-shape shape1"></div>
-    <div class="bg-shape shape2"></div>
+    <div class="admin-container">
+        <header>
+            <h1>Amakha Paris 360</h1>
+            <p>Panel de Administración y Control de Stock</p>
+        </header>
 
-    <header>
-        <h1>Amakha Paris 360</h1>
-        <p>Catálogo de Fragancias Disponibles</p>
-    </header>
-
-    <main class="catalog-container" id="catalog">
-        <p style="text-align:center; width:100%;">Cargando catálogo...</p>
-    </main>
-
-    <!-- Botón Flotante del Carrito -->
-    <div class="cart-floating-btn" id="cart-btn">
-        <span>🛒 Mi Pedido</span>
-        <span class="cart-badge" id="cart-badge-count">0</span>
-    </div>
-
-    <!-- Capa desenfocada de fondo y Ventana del Carrito -->
-    <div class="cart-overlay" id="cart-overlay"></div>
-    <div class="cart-modal" id="cart-modal">
-        <div class="cart-header">
-            <h2>Tu Pedido</h2>
-            <button class="close-btn" id="cart-close">✕</button>
-        </div>
-        <div class="cart-items-container" id="cart-items">
-            <!-- Items dinámicos -->
-        </div>
-        <div class="cart-footer">
-            <div class="cart-total-row">
-                <span>Total:</span>
-                <span id="cart-total-val">$0</span>
+        <!-- Formulario de ingreso -->
+        <div class="admin-box">
+            <h2>Añadir Nuevo Perfume</h2>
+            
+            <div class="form-group">
+                <label>Nombre del Perfume</label>
+                <input type="text" id="nombre" placeholder="Ej: Fragancia Masculina Amakha" required>
             </div>
-            <button class="btn-checkout" id="btn-pay" disabled>
-                🟢 Hacer pago por WhatsApp
-            </button>
+            
+            <div class="form-group">
+                <label>Precio de Venta ($)</label>
+                <input type="number" id="precio" placeholder="Ej: 450" required>
+            </div>
+            
+            <div class="form-group">
+                <label>Cantidad Inicial en Stock</label>
+                <input type="number" id="stock" placeholder="Ej: 10" required>
+            </div>
+            
+            <div class="form-group">
+                <label>Enlace Directo de la Imagen (ImgBB)</label>
+                <input type="text" id="fotoUrl" placeholder="Debe ser la URL completa que termina en .jpg o .png" required>
+            </div>
+            
+            <!-- Contenedor Vista Previa en Vivo -->
+            <div class="preview-box" id="preview-box">
+                <p style="font-size: 11px; margin-bottom: 6px; color: var(--accent-color); font-weight: 600;">Vista previa de la imagen:</p>
+                <img id="img-live-preview" src="" alt="Previsualización">
+            </div>
+            
+            <button id="btn-add">Guardar en Catálogo</button>
+        </div>
+
+        <!-- Lista de Inventario -->
+        <div class="admin-box">
+            <h2>Inventario Actual (Tiempo Real)</h2>
+            <div id="inventory-list">Cargando inventario conectado...</div>
         </div>
     </div>
 
+    <!-- SDK de Firebase Realtime Database v10 -->
     <script type="module">
         import { initializeApp } from "https://www.gstatic.com/firebasejs/10.8.1/firebase-app.js";
-        import { getDatabase, ref, onValue, runTransaction } from "https://www.gstatic.com/firebasejs/10.8.1/firebase-database.js";
+        import { getDatabase, ref, push, onValue, update, remove } from "https://www.gstatic.com/firebasejs/10.8.1/firebase-database.js";
 
-        // Configuración de tu Firebase Realtime Database
+        // Configuración exacta sincronizada con tu catálogo
         const firebaseConfig = {
             apiKey: "AIzaSyDtT22MM01MGoNosSBNHEdvKQlGu8ghIBQ",
             authDomain: "inventario-de-local.firebaseapp.com",
@@ -134,240 +259,122 @@
             appId: "1:535105215340:web:47fcd308f64297b1c23149"
         };
 
-        // ⚠️ REEMPLAZA ESTE NÚMERO CON EL TUYO REAL (Incluye el código de país sin el signo +)
-        const WHATSAPP_NUMERO = "59890000000"; 
-
         const app = initializeApp(firebaseConfig);
         const db = getDatabase(app);
         const perfumesRef = ref(db, "perfumes");
 
-        let dbInventory = {}; // Almacena el estado actual del inventario de Firebase
-        let cart = {};        // Almacena los productos seleccionados por el cliente
+        // Escuchador de la URL para activar la previsualización de la foto antes de guardarla
+        document.getElementById('fotoUrl').addEventListener('input', (e) => {
+            const url = e.target.value.trim();
+            const previewBox = document.getElementById('preview-box');
+            const imgPreview = document.getElementById('img-live-preview');
+            
+            if (url) {
+                imgPreview.src = url;
+                previewBox.style.display = 'block';
+            } else {
+                previewBox.style.display = 'none';
+            }
+        });
 
-        // Elementos del DOM
-        const cartBtn = document.getElementById('cart-btn');
-        const cartModal = document.getElementById('cart-modal');
-        const cartOverlay = document.getElementById('cart-overlay');
-        const cartClose = document.getElementById('cart-close');
-        const cartItemsContainer = document.getElementById('cart-items');
-        const cartTotalVal = document.getElementById('cart-total-val');
-        const cartBadgeCount = document.getElementById('cart-badge-count');
-        const btnPay = document.getElementById('btn-pay');
+        // Guardar perfume nuevo en la base de datos
+        document.getElementById('btn-add').addEventListener('click', async () => {
+            const nombre = document.getElementById('nombre').value.trim();
+            const precio = Number(document.getElementById('precio').value);
+            const stock = Number(document.getElementById('stock').value);
+            const fotoUrl = document.getElementById('fotoUrl').value.trim();
 
-        // Control de apertura/cierre del carrito
-        const toggleCart = () => {
-            cartModal.classList.toggle('open');
-            cartOverlay.classList.toggle('open');
-        };
-        cartBtn.addEventListener('click', toggleCart);
-        cartClose.addEventListener('click', toggleCart);
-        cartOverlay.addEventListener('click', toggleCart);
+            if (nombre && precio >= 0 && stock >= 0 && fotoUrl) {
+                
+                // Validación para advertir si copiaste el enlace erróneo de la página web de ImgBB
+                if (fotoUrl.includes('imgbb.com') && !fotoUrl.includes('i.ibb.co')) {
+                    alert("⚠️ ¡Atención! El enlace ingresado parece ser el link del visor web de ImgBB y no la 'URL de la imagen'. Asegúrate de usar el link directo que termina en .jpg o .png para que tus clientes puedan visualizarlo.");
+                }
 
-        // Escuchar cambios en la base de datos en tiempo real
+                try {
+                    await push(perfumesRef, { nombre, precio, stock, fotoUrl });
+                    alert("¡Perfume ingresado correctamente!");
+                    
+                    // Resetear formulario
+                    document.getElementById('nombre').value = '';
+                    document.getElementById('precio').value = '';
+                    document.getElementById('stock').value = '';
+                    document.getElementById('fotoUrl').value = '';
+                    document.getElementById('preview-box').style.display = 'none';
+                } catch (error) {
+                    alert("Error al subir los datos: " + error.message);
+                }
+            } else {
+                alert("Por favor, rellena todos los casilleros con datos válidos.");
+            }
+        });
+
+        // Escuchar cambios globales (Tus modificaciones manuales o compras de clientes)
         onValue(perfumesRef, (snapshot) => {
-            const catalogContainer = document.getElementById('catalog');
-            catalogContainer.innerHTML = ''; 
+            const inventoryList = document.getElementById('inventory-list');
+            inventoryList.innerHTML = '';
 
             if (!snapshot.exists()) {
-                catalogContainer.innerHTML = '<p style="text-align:center; width:100%;">No hay perfumes disponibles.</p>';
-                dbInventory = {};
-                validateCartStock();
+                inventoryList.innerHTML = '<p style="text-align:center; color:var(--secondary-text); margin: 10px 0;">No tienes artículos en tu inventario actual.</p>';
                 return;
             }
 
-            dbInventory = snapshot.val();
-            
-            Object.keys(dbInventory).forEach((id) => {
-                const perfume = dbInventory[id];
+            const data = snapshot.val();
+
+            Object.keys(data).forEach((id) => {
+                const perfume = data[id];
                 
-                let stockClass = '';
-                let stockText = '';
-                let cardClass = 'product-card';
-                let isBtnDisabled = false;
+                // Muestra un marcador de error visual elegante si el link guardado estuviera dañado
+                const imgTag = perfume.fotoUrl ? `<img src="${perfume.fotoUrl}" alt="" onerror="this.onerror=null; this.src='https://via.placeholder.com/50?text=Error';">` : `<div style="width:52px; height:52px; background:#ccc; margin-right:14px; border-radius:8px;"></div>`;
 
-                if (perfume.stock > 4) {
-                    stockClass = 'stock-high';
-                    stockText = `Stock: ${perfume.stock} disp.`;
-                } else if (perfume.stock > 0 && perfume.stock <= 4) {
-                    stockClass = 'stock-low';
-                    stockText = `¡Solo ${perfume.stock} disp.!`;
-                } else {
-                    stockClass = 'stock-out';
-                    stockText = 'Agotado';
-                    cardClass += ' out-of-stock-card';
-                    isBtnDisabled = true;
-                }
-
-                const imagenSrc = perfume.fotoUrl ? perfume.fotoUrl : 'https://via.placeholder.com/300?text=Sin+Foto';
-
-                const card = document.createElement('div');
-                card.className = cardClass;
-                card.innerHTML = `
-                    <div class="product-image-container">
-                        <img src="${imagenSrc}" alt="${perfume.nombre}" loading="lazy" onerror="this.onerror=null; this.src='https://via.placeholder.com/300?text=Error+Enlace';">
+                const item = document.createElement('div');
+                item.className = 'perfume-item';
+                item.innerHTML = `
+                    <div class="info-container">
+                        ${imgTag}
+                        <div class="info-details">
+                            <strong>${perfume.nombre}</strong>
+                            <p>Precio: $${perfume.precio} | Stock: <b style="color:${perfume.stock === 0 ? 'red' : 'inherit'};">${perfume.stock} u.</b></p>
+                        </div>
                     </div>
-                    <h2 class="product-name">${perfume.nombre}</h2>
-                    <div class="product-price">$${perfume.precio}</div>
-                    <div class="stock-badge ${stockClass}">${stockText}</div>
-                    <button class="btn-add-cart" ${isBtnDisabled ? 'disabled' : ''} data-id="${id}">
-                        ${isBtnDisabled ? 'Agotado' : '🛒 Agregar'}
-                    </button>
+                    <div class="actions">
+                        <button class="btn-inc" data-id="${id}" data-stock="${perfume.stock}">+1</button>
+                        <button class="btn-dec" data-id="${id}" data-stock="${perfume.stock}">-1</button>
+                        <button class="btn-delete" data-id="${id}">Borrar</button>
+                    </div>
                 `;
-                catalogContainer.appendChild(card);
+                inventoryList.appendChild(item);
             });
 
-            // Asignar eventos a los nuevos botones agregados
-            document.querySelectorAll('.btn-add-cart').forEach(btn => {
-                btn.addEventListener('click', (e) => {
+            // Sincronizadores manuales para los botones de control de stock
+            document.querySelectorAll('.btn-inc').forEach(btn => {
+                btn.addEventListener('click', async (e) => {
                     const id = e.target.getAttribute('data-id');
-                    addToCart(id);
+                    const currentStock = Number(e.target.getAttribute('data-stock'));
+                    await update(ref(db, `perfumes/${id}`), { stock: currentStock + 1 });
                 });
             });
 
-            validateCartStock();
-        });
-
-        // Lógica del Carrito
-        function addToCart(id) {
-            const maxAvailable = dbInventory[id]?.stock || 0;
-            const currentInCart = cart[id]?.quantity || 0;
-
-            if (currentInCart < maxAvailable) {
-                if (!cart[id]) {
-                    cart[id] = {
-                        nombre: dbInventory[id].nombre,
-                        precio: dbInventory[id].precio,
-                        quantity: 1
-                    };
-                } else {
-                    cart[id].quantity += 1;
-                }
-                renderCart();
-            } else {
-                alert("Lo sentimos, no hay más stock disponible de este perfume.");
-            }
-        }
-
-        function changeQuantity(id, change) {
-            if (!cart[id]) return;
-            
-            const maxAvailable = dbInventory[id]?.stock || 0;
-            const newQuantity = cart[id].quantity + change;
-
-            if (newQuantity <= 0) {
-                delete cart[id];
-            } else if (newQuantity <= maxAvailable) {
-                cart[id].quantity = newQuantity;
-            } else {
-                alert("Has alcanzado el límite máximo de unidades en stock.");
-            }
-            renderCart();
-        }
-
-        // Si el stock real baja en Firebase y supera lo que el cliente tiene en el carrito, se ajusta automáticamente
-        function validateCartStock() {
-            let changesMade = false;
-            Object.keys(cart).forEach(id => {
-                const currentStock = dbInventory[id]?.stock || 0;
-                if (currentStock === 0) {
-                    delete cart[id];
-                    changesMade = true;
-                } else if (cart[id].quantity > currentStock) {
-                    cart[id].quantity = currentStock;
-                    changesMade = true;
-                }
-            });
-            if (changesMade) renderCart();
-        }
-
-        function renderCart() {
-            cartItemsContainer.innerHTML = '';
-            let total = 0;
-            let totalItemsCount = 0;
-
-            Object.keys(cart).forEach(id => {
-                const item = cart[id];
-                const subtotal = item.precio * item.quantity;
-                total += subtotal;
-                totalItemsCount += item.quantity;
-
-                const row = document.createElement('div');
-                row.className = 'cart-item';
-                row.innerHTML = `
-                    <div class="cart-item-info">
-                        <h4>${item.nombre}</h4>
-                        <p>$${item.precio} c/u • Subtotal: $${subtotal}</p>
-                    </div>
-                    <div class="cart-item-actions">
-                        <button class="minus-btn" data-id="${id}">-</button>
-                        <span>${item.quantity}</span>
-                        <button class="plus-btn" data-id="${id}">+</button>
-                    </div>
-                `;
-                cartItemsContainer.appendChild(row);
+            document.querySelectorAll('.btn-dec').forEach(btn => {
+                btn.addEventListener('click', async (e) => {
+                    const id = e.target.getAttribute('data-id');
+                    const currentStock = Number(e.target.getAttribute('data-stock'));
+                    if (currentStock > 0) {
+                        await update(ref(db, `perfumes/${id}`), { stock: currentStock - 1 });
+                    }
+                });
             });
 
-            if (totalItemsCount === 0) {
-                cartItemsContainer.innerHTML = '<p style="text-align:center; color:#86868b; margin-top:20px;">Tu carrito está vacío.</p>';
-                btnPay.disabled = true;
-            } else {
-                btnPay.disabled = false;
-            }
-
-            cartTotalVal.innerText = `$${total}`;
-            cartBadgeCount.innerText = totalItemsCount;
-
-            // Eventos internos del carrito
-            document.querySelectorAll('.minus-btn').forEach(b => b.addEventListener('click', (e) => changeQuantity(e.target.getAttribute('data-id'), -1)));
-            document.querySelectorAll('.plus-btn').forEach(b => b.addEventListener('click', (e) => changeQuantity(e.target.getAttribute('data-id'), 1)));
-        }
-
-        // PROCESO DE PAGO: Descuenta en Firebase y envía el pedido detallado a WhatsApp
-        btnPay.addEventListener('click', async () => {
-            if (Object.keys(cart).length === 0) return;
-
-            btnPay.disabled = true;
-            btnPay.innerText = "⏳ Procesando pedido...";
-
-            try {
-                let mensajeWhatsApp = "🛍️ *¡Hola! Vengo de tu catálogo y quiero confirmar este pedido:*\n\n";
-                let totalPedido = 0;
-
-                // 1. Descontar stock utilizando Transacciones Atómicas (Seguridad absoluta ante compras simultáneas)
-                for (const id of Object.keys(cart)) {
-                    const itemComprado = cart[id];
-                    const stockProductRef = ref(db, `perfumes/${id}/stock`);
-
-                    await runTransaction(stockProductRef, (currentStock) => {
-                        if (currentStock === null) return 0;
-                        // Restamos las unidades deseadas asegurando que no baje de 0
-                        return Math.max(0, currentStock - itemComprado.quantity);
-                    });
-
-                    const subtotal = itemComprado.precio * itemComprado.quantity;
-                    totalPedido += subtotal;
-                    mensajeWhatsApp += `▪️ *${itemComprado.nombre}* \n   Cantidad: ${itemComprado.quantity} u. x $${itemComprado.precio}\n   Subtotal: $${subtotal}\n\n`;
-                }
-
-                mensajeWhatsApp += `💰 *TOTAL A PAGAR: $${totalPedido}*\n\n`;
-                mensajeWhatsApp += "📍 Quedo atento para coordinar el método de pago y los detalles del envío.";
-
-                // 2. Limpiar el carrito local antes de redirigir
-                cart = {};
-                renderCart();
-                toggleCart();
-
-                // 3. Redirigir al WhatsApp con el mensaje estructurado de forma perfecta
-                const urlWhatsApp = `https://wa.me/${WHATSAPP_NUMERO}?text=${encodeURIComponent(mensajeWhatsApp)}`;
-                window.open(urlWhatsApp, '_blank');
-
-            } catch (error) {
-                alert("Hubo un percance procesando el stock. Reintenta de nuevo por favor.");
-                console.error(error);
-            } finally {
-                btnPay.disabled = false;
-                btnPay.innerHTML = "🟢 Hacer pago por WhatsApp";
-            }
+            document.querySelectorAll('.btn-delete').forEach(btn => {
+                btn.addEventListener('click', async (e) => {
+                    const id = e.target.getAttribute('data-id');
+                    if (confirm("¿Estás completamente seguro de que deseas remover este perfume del catálogo general?")) {
+                        await remove(ref(db, `perfumes/${id}`));
+                    }
+                });
+            });
+        }, (error) => {
+            document.getElementById('inventory-list').innerHTML = `<p style="color:red; text-align:center;">Fallo de enlace con Firebase: ${error.message}</p>`;
         });
     </script>
 </body>
