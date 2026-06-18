@@ -11,6 +11,7 @@
             --accent-gold: #d4af37;
             --accent-red: #ff453a;
             --accent-blue: #0a84ff;
+            --accent-green: #30d158;
             --bg-gradient: linear-gradient(135deg, #0f0f11 0%, #1c1c1e 100%);
             --card-bg: rgba(30, 30, 34, 0.75);
             --card-border: rgba(255, 255, 255, 0.12);
@@ -67,7 +68,7 @@
 
         /* Formulario de Cristal */
         .form-section { background: var(--card-bg); backdrop-filter: blur(15px); -webkit-backdrop-filter: blur(15px); border: 1px solid var(--card-border); border-radius: 24px; padding: 20px; box-shadow: 0 12px 30px rgba(0, 0, 0, 0.3); }
-        .form-section h2 { font-size: 17px; font-weight: 700; margin-bottom: 16px; color: var(--accent-gold); text-transform: uppercase; letter-spacing: 0.5px; }
+        .form-section h2 { font-size: 16px; font-weight: 700; margin-bottom: 16px; color: var(--accent-gold); text-transform: uppercase; letter-spacing: 0.5px; }
         
         .form-grid { display: grid; grid-template-columns: 1fr 1fr; gap: 14px; }
         .full-width { grid-column: span 2; }
@@ -79,11 +80,17 @@
         .form-group input:focus, .form-group textarea:focus { border-color: var(--accent-gold); background: rgba(255,255,255,0.08); outline: none; }
         .form-group textarea { resize: none; height: 70px; }
 
+        /* Estilo especial para el checkbox de activación */
+        .checkbox-group { display: flex; align-items: center; gap: 10px; background: rgba(0,0,0,0.15); padding: 12px; border-radius: 12px; border: 1px solid rgba(255,255,255,0.05); cursor: pointer; }
+        .checkbox-group input[type="checkbox"] { -webkit-appearance: checkbox; -moz-appearance: checkbox; appearance: checkbox; width: 18px; height: 18px; accent-color: var(--accent-gold); cursor: pointer; }
+        .checkbox-group label { font-size: 13px; color: #ffffff; cursor: pointer; font-weight: 600; }
+
         .form-actions { display: flex; gap: 10px; margin-top: 16px; }
         .btn { flex: 1; padding: 14px; border-radius: 14px; border: none; font-weight: 700; font-size: 14px; cursor: pointer; transition: background 0.2s, transform 0.1s; display: flex; align-items: center; justify-content: center; text-transform: uppercase; letter-spacing: 0.3px; }
         
         .btn-primary { background: var(--accent-gold); color: #000000; }
-        .btn-secondary { background: rgba(255,255,255,0.1); color: #ffffff; border: 1px solid rgba(255,255,255,0.15); display: none; } /* Oculto por defecto */
+        .btn-secondary { background: rgba(255,255,255,0.1); color: #ffffff; border: 1px solid rgba(255,255,255,0.15); display: none; }
+        .btn-success { background: var(--accent-green); color: #000000; }
 
         /* Lista de Productos del Inventario */
         .inventory-section { display: flex; flex-direction: column; gap: 14px; }
@@ -110,7 +117,6 @@
         .btn-edit { background: rgba(10, 132, 255, 0.15); color: var(--accent-blue); }
         .btn-delete { background: rgba(255, 69, 58, 0.15); color: var(--accent-red); }
 
-        /* Ajustes responsive para pantallas muy chicas */
         @media (max-width: 400px) {
             .form-grid { grid-template-columns: 1fr; }
             .full-width { grid-column: span 1; }
@@ -131,7 +137,33 @@
 
     <main class="admin-container">
         
-        <!-- Sección Formulario dinámico -->
+        <!-- SECCIÓN 1: ADMINISTRACIÓN DE PUBLICIDAD LATERAL -->
+        <section class="form-section" style="border-color: rgba(48, 209, 88, 0.3);">
+            <h2>Espacio Publicitario Lateral</h2>
+            <form id="publicidad-form">
+                <div class="form-grid">
+                    <div class="form-group full-width">
+                        <label for="pub-foto">URL del Banner (Imagen publicitaria)</label>
+                        <input type="url" id="pub-foto" placeholder="https://enlace-de-tu-diseno.com/banner.jpg">
+                    </div>
+                    <div class="form-group full-width">
+                        <label for="pub-link">Enlace de Destino (Web o Link Directo a tu WhatsApp)</label>
+                        <input type="url" id="pub-link" placeholder="https://wa.me/59899XXXXXX">
+                    </div>
+                    <div class="form-group full-width">
+                        <div class="checkbox-group">
+                            <input type="checkbox" id="pub-activo">
+                            <label for="pub-activo">Mostrar este espacio publicitario en la web principal</label>
+                        </div>
+                    </div>
+                </div>
+                <div class="form-actions">
+                    <button type="submit" class="btn btn-success" id="btn-save-pub">Actualizar Publicidad</button>
+                </div>
+            </form>
+        </section>
+        
+        <!-- SECCIÓN 2: FORMULARIO DINÁMICO DE PRODUCTOS -->
         <section class="form-section">
             <h2 id="form-title">Agregar Nuevo Perfume</h2>
             <form id="perfume-form">
@@ -149,7 +181,7 @@
                         <input type="number" id="p-stock" placeholder="Ej: 10" required min="0">
                     </div>
                     <div class="form-group full-width">
-                        <label for="p-foto">URL de la Imagen (Enlace Web)</label>
+                        <label for="p-foto">URL de la Imagen del Producto</label>
                         <input type="url" id="p-foto" placeholder="https://enlace-de-la-foto.com/imagen.jpg">
                     </div>
                     <div class="form-group full-width">
@@ -165,7 +197,7 @@
             </form>
         </section>
 
-        <!-- Sección Inventario en vivo -->
+        <!-- SECCIÓN 3: INVENTARIO EN VIVO -->
         <section class="inventory-section">
             <div class="inventory-title">Productos en Base de Datos</div>
             <div id="admin-inventory-list">
@@ -177,9 +209,8 @@
 
     <script type="module">
         import { initializeApp } from "https://www.gstatic.com/firebasejs/10.8.1/firebase-app.js";
-        import { getDatabase, ref, onValue, push, set, update, remove, runTransaction } from "https://www.gstatic.com/firebasejs/10.8.1/firebase-database.js";
+        import { getDatabase, ref, onValue, push, set, remove, runTransaction } from "https://www.gstatic.com/firebasejs/10.8.1/firebase-database.js";
 
-        // Idéntica configuración que tu aplicación principal
         const firebaseConfig = {
             apiKey: "AIzaSyDtT22MM01MGoNosSBNHEdvKQlGu8ghIBQ",
             authDomain: "inventario-de-local.firebaseapp.com",
@@ -192,29 +223,69 @@
 
         const app = initializeApp(firebaseConfig);
         const db = getDatabase(app);
+        
+        // Referencias Firebase
         const perfumesRef = ref(db, "perfumes");
+        const publicidadRef = ref(db, "publicidad");
 
-        // Estado interno de la app admin
         let currentEditingId = null; 
         let globalProducts = {};
 
+        // Elementos UI Perfumes
         const perfumeForm = document.getElementById('perfume-form');
         const formTitle = document.getElementById('form-title');
         const btnSubmit = document.getElementById('btn-submit');
         const btnCancel = document.getElementById('btn-cancel');
         const inventoryListContainer = document.getElementById('admin-inventory-list');
-
-        // Campos del Formulario
         const inputNombre = document.getElementById('p-nombre');
         const inputPrecio = document.getElementById('p-precio');
         const inputStock = document.getElementById('p-stock');
         const inputFoto = document.getElementById('p-foto');
         const inputDescripcion = document.getElementById('p-descripcion');
 
-        // 1. Escuchar la Base de Datos en Tiempo Real y Renderizar
+        // Elementos UI Publicidad
+        const publicidadForm = document.getElementById('publicidad-form');
+        const inputPubFoto = document.getElementById('pub-foto');
+        const inputPubLink = document.getElementById('pub-link');
+        const inputPubActivo = document.getElementById('pub-activo');
+
+        // ==========================================
+        // LÓGICA DE PUBLICIDAD (NUEVA)
+        // ==========================================
+        
+        // Cargar los datos actuales de la publicidad al entrar
+        onValue(publicidadRef, (snapshot) => {
+            if (snapshot.exists()) {
+                const data = snapshot.val();
+                inputPubFoto.value = data.fotoUrl || '';
+                inputPubLink.value = data.link || '';
+                inputPubActivo.checked = data.activo || false;
+            }
+        });
+
+        // Guardar cambios en el espacio publicitario
+        publicidadForm.addEventListener('submit', async (e) => {
+            e.preventDefault();
+            try {
+                await set(publicidadRef, {
+                    fotoUrl: inputPubFoto.value.trim(),
+                    link: inputPubLink.value.trim(),
+                    activo: inputPubActivo.checked
+                });
+                alert("¡Espacio publicitario actualizado con éxito!");
+            } catch (err) {
+                console.error(err);
+                alert("Error crítico al actualizar la publicidad.");
+            }
+        });
+
+
+        // ==========================================
+        // LÓGICA DE INVENTARIO (PERFUMES)
+        // ==========================================
+
         onValue(perfumesRef, (snapshot) => {
             inventoryListContainer.innerHTML = '';
-
             if (!snapshot.exists()) {
                 inventoryListContainer.innerHTML = '<p style="text-align: center; color: var(--secondary-text); padding: 20px;">No hay ningún perfume registrado.</p>';
                 globalProducts = {};
@@ -254,10 +325,8 @@
             });
         });
 
-        // 2. Evento del Botón Guardar (Agregar o Confirmar Modificación)
         perfumeForm.addEventListener('submit', async (e) => {
             e.preventDefault();
-
             const datosPerfume = {
                 nombre: inputNombre.value.trim(),
                 precio: parseFloat(inputPrecio.value),
@@ -268,12 +337,10 @@
 
             try {
                 if (currentEditingId) {
-                    // Acción de Editar
                     const itemRef = ref(db, `perfumes/${currentEditingId}`);
                     await set(itemRef, datosPerfume);
                     alert("¡Producto modificado con éxito!");
                 } else {
-                    // Acción de Agregar Nuevo
                     const nuevoPerfumeRef = push(perfumesRef);
                     await set(nuevoPerfumeRef, datosPerfume);
                     alert("¡Producto agregado al catálogo!");
@@ -285,7 +352,6 @@
             }
         });
 
-        // 3. Funciones Globales de Operación (Expuestas a Window para onclick en strings HTML)
         window.amp_startEdit = function(id) {
             const p = globalProducts[id];
             if (!p) return;
@@ -295,15 +361,13 @@
             btnSubmit.innerText = "Guardar Cambios";
             btnCancel.style.display = "block";
 
-            // Autocompletar inputs
             inputNombre.value = p.nombre;
             inputPrecio.value = p.precio;
             inputStock.value = p.stock;
             inputFoto.value = p.fotoUrl || '';
             inputDescripcion.value = p.descripcion || '';
 
-            // Hacer scroll suave hacia arriba para que el admin vea el formulario cargado en el celular
-            window.scrollTo({ top: 0, behavior: 'smooth' });
+            window.scrollTo({ top: 400, behavior: 'smooth' });
         };
 
         window.amp_deleteProduct = async function(id) {
@@ -322,21 +386,19 @@
             }
         };
 
-        // Cambios rápidos de stock en bodega (+1 / -1) utilizando transacciones seguras
         window.amp_quickStock = async function(id, cambio) {
             const stockRef = ref(db, `perfumes/${id}/stock`);
             try {
                 await runTransaction(stockRef, (currentStock) => {
                     if (currentStock === null) return 0;
                     const nuevoStock = currentStock + cambio;
-                    return nuevoStock < 0 ? 0 : nuevoStock; // Evitar stocks negativos
+                    return nuevoStock < 0 ? 0 : nuevoStock;
                 });
             } catch (err) {
                 console.error("Error actualizando stock rápido", err);
             }
         };
 
-        // Cancelar edición manual
         btnCancel.addEventListener('click', resetearFormulario);
 
         function resetearFormulario() {
