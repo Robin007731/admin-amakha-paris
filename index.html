@@ -2,253 +2,184 @@
 <html lang="es">
 <head>
     <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Admin - Amakha Paris 360</title>
+    <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no, viewport-fit=cover">
+    <title>Panel Admin - Amakha Paris 360</title>
     <style>
         :root {
-            --primary-text: #1d1d1f;
-            --secondary-text: #86868b;
-            --accent-color: #007aff;
-            --danger-color: #ff3b30;
-            --bg-color: #f5f5f7;
-            --card-bg: #ffffff;
-            --border-color: #e5e5ea;
+            --primary-text: #ffffff;
+            --secondary-text: #a1a1a6;
+            --accent-gold: #d4af37;
+            --accent-red: #ff453a;
+            --accent-blue: #0a84ff;
+            --bg-gradient: linear-gradient(135deg, #0f0f11 0%, #1c1c1e 100%);
+            --card-bg: rgba(30, 30, 34, 0.75);
+            --card-border: rgba(255, 255, 255, 0.12);
+            --input-bg: rgba(255, 255, 255, 0.05);
         }
 
-        body { 
-            font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, sans-serif; 
-            padding: 20px; 
-            background: var(--bg-color); 
-            color: var(--primary-text);
-            margin: 0;
-        }
-
-        .admin-container {
-            max-width: 650px;
-            margin: 0 auto;
-        }
-
-        header {
-            text-align: center;
-            margin-bottom: 25px;
-        }
-
-        header h1 {
-            font-size: 26px;
-            font-weight: 700;
-            letter-spacing: -0.5px;
-            margin-bottom: 5px;
-        }
-
-        header p {
-            color: var(--secondary-text);
-            font-size: 14px;
-            margin: 0;
-        }
-
-        .admin-box { 
-            background: var(--card-bg); 
-            padding: 24px; 
-            border-radius: 16px; 
-            margin-bottom: 24px; 
-            box-shadow: 0 4px 20px rgba(0,0,0,0.05); 
-            border: 1px solid var(--border-color);
-        }
-
-        h2 { 
-            font-size: 18px;
-            font-weight: 600;
-            margin-top: 0; 
-            margin-bottom: 16px;
-            border-bottom: 1px solid var(--border-color);
-            padding-bottom: 10px;
-        }
-
-        .form-group {
-            margin-bottom: 14px;
-        }
-
-        label { 
-            font-size: 13px; 
-            color: var(--secondary-text); 
-            font-weight: 600; 
-            display: block; 
-            margin-bottom: 6px; 
-        }
-
-        input { 
-            padding: 12px; 
-            width: 100%; 
+        /* Reseteo global optimizado para móviles */
+        * { 
             box-sizing: border-box; 
-            font-size: 15px; 
-            border-radius: 10px; 
-            border: 1px solid var(--border-color); 
-            background: #fafafa;
-            transition: border-color 0.2s;
-        }
-
-        input:focus {
-            outline: none;
-            border-color: var(--accent-color);
-            background: #fff;
-        }
-
-        button { 
-            padding: 14px; 
-            width: 100%; 
-            box-sizing: border-box; 
-            font-size: 15px; 
-            border-radius: 12px;
-            background: var(--accent-color); 
-            color: white; 
-            border: none; 
-            cursor: pointer; 
-            font-weight: 600; 
-            transition: background 0.2s, transform 0.1s; 
-        }
-
-        button:active { 
-            transform: scale(0.98); 
-        }
-
-        /* Vista previa de la foto */
-        .preview-box { 
-            display: none; 
-            text-align: center; 
-            margin: 15px 0; 
-            padding: 12px; 
-            border: 1px dashed var(--accent-color); 
-            border-radius: 10px; 
-            background: #f0f7ff; 
-        }
-        .preview-box img { 
-            max-width: 100px; 
-            max-height: 100px; 
-            object-fit: cover; 
-            border-radius: 8px; 
-            box-shadow: 0 2px 8px rgba(0,0,0,0.1); 
-        }
-
-        /* Lista de inventario */
-        .perfume-item { 
-            display: flex; 
-            justify-content: space-between; 
-            align-items: center; 
-            padding: 14px 0; 
-            border-bottom: 1px solid var(--border-color); 
-        }
-        
-        .perfume-item:last-child {
-            border-bottom: none;
-        }
-
-        .perfume-item img { 
-            width: 52px; 
-            height: 52px; 
-            object-fit: cover; 
-            border-radius: 8px; 
-            margin-right: 14px; 
-            background: #f5f5f7; 
-        }
-        
-        .info-container { 
-            display: flex; 
-            align-items: center; 
-        }
-
-        .info-details strong {
-            font-size: 15px;
-        }
-
-        .info-details p {
-            margin: 3px 0 0 0;
-            font-size: 13px;
-            color: var(--secondary-text);
-        }
-
-        .actions { 
-            display: flex; 
-            gap: 6px; 
-        }
-
-        .actions button { 
-            width: auto; 
-            padding: 8px 12px; 
             margin: 0; 
-            font-size: 13px; 
-            border-radius: 8px;
+            padding: 0; 
+            font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, Helvetica, Arial, sans-serif; 
+            -webkit-tap-highlight-color: transparent; 
+            -webkit-text-size-adjust: 100%;
+        }
+        
+        body { 
+            background: var(--bg-gradient); 
+            background-attachment: fixed; 
+            color: var(--primary-text); 
+            min-height: 100vh; 
+            padding-bottom: calc(40px + env(safe-area-inset-bottom)); 
+            overflow-x: hidden;
+            text-rendering: optimizeLegibility;
+            -webkit-font-smoothing: antialiased;
         }
 
-        .btn-inc { background: #e5e5ea; color: var(--primary-text); }
-        .btn-inc:hover { background: #d1d1d6; }
+        /* Forzar renderizado limpio en iOS */
+        button, input, textarea {
+            -webkit-appearance: none;
+            -moz-appearance: none;
+            appearance: none;
+        }
         
-        .btn-dec { background: #e5e5ea; color: var(--primary-text); }
-        .btn-dec:hover { background: #d1d1d6; }
+        .bg-shape { position: fixed; border-radius: 50%; filter: blur(80px); z-index: -1; opacity: 0.4; pointer-events: none; }
+        .shape1 { width: 300px; height: 300px; background: rgba(214, 175, 55, 0.08); top: -50px; left: -50px; }
+        .shape2 { width: 250px; height: 250px; background: rgba(10, 132, 255, 0.05); bottom: 100px; right: -50px; }
 
-        .btn-delete { background: var(--danger-color); }
-        .btn-delete:hover { background: #d9261c; }
+        header { 
+            position: sticky; 
+            top: 0; 
+            z-index: 90; 
+            background: rgba(15, 15, 17, 0.85); 
+            backdrop-filter: blur(20px); 
+            -webkit-backdrop-filter: blur(20px); 
+            border-bottom: 1px solid rgba(255, 255, 255, 0.08); 
+            padding: calc(20px + env(safe-area-inset-top)) 20px 20px 20px; 
+            text-align: center; 
+        }
+        header h1 { font-size: 22px; font-weight: 800; letter-spacing: -0.5px; background: linear-gradient(135deg, #fee082 0%, #d4af37 50%, #a37c1e 100%); -webkit-background-clip: text; -webkit-text-fill-color: transparent; }
+        header p { font-size: 13px; color: var(--secondary-text); margin-top: 5px; }
 
-        @media (max-width: 600px) {
-            .perfume-item { flex-direction: column; align-items: flex-start; }
-            .perfume-item div:last-child { margin-top: 12px; width: 100%; }
-            .actions button { flex: 1; text-align: center; }
+        .admin-container { max-width: 800px; margin: 0 auto; padding: 20px; display: flex; flex-direction: column; gap: 24px; }
+
+        /* Formulario de Cristal */
+        .form-section { background: var(--card-bg); backdrop-filter: blur(15px); -webkit-backdrop-filter: blur(15px); border: 1px solid var(--card-border); border-radius: 24px; padding: 20px; box-shadow: 0 12px 30px rgba(0, 0, 0, 0.3); }
+        .form-section h2 { font-size: 17px; font-weight: 700; margin-bottom: 16px; color: var(--accent-gold); text-transform: uppercase; letter-spacing: 0.5px; }
+        
+        .form-grid { display: grid; grid-template-columns: 1fr 1fr; gap: 14px; }
+        .full-width { grid-column: span 2; }
+        
+        .form-group { display: flex; flex-direction: column; gap: 6px; }
+        .form-group label { font-size: 12px; font-weight: 600; color: var(--secondary-text); }
+        
+        .form-group input, .form-group textarea { background: var(--input-bg); border: 1px solid rgba(255, 255, 255, 0.1); border-radius: 12px; padding: 12px; color: #ffffff; font-size: 14px; transition: border-color 0.2s, background 0.2s; width: 100%; }
+        .form-group input:focus, .form-group textarea:focus { border-color: var(--accent-gold); background: rgba(255,255,255,0.08); outline: none; }
+        .form-group textarea { resize: none; height: 70px; }
+
+        .form-actions { display: flex; gap: 10px; margin-top: 16px; }
+        .btn { flex: 1; padding: 14px; border-radius: 14px; border: none; font-weight: 700; font-size: 14px; cursor: pointer; transition: background 0.2s, transform 0.1s; display: flex; align-items: center; justify-content: center; text-transform: uppercase; letter-spacing: 0.3px; }
+        
+        .btn-primary { background: var(--accent-gold); color: #000000; }
+        .btn-secondary { background: rgba(255,255,255,0.1); color: #ffffff; border: 1px solid rgba(255,255,255,0.15); display: none; } /* Oculto por defecto */
+
+        /* Lista de Productos del Inventario */
+        .inventory-section { display: flex; flex-direction: column; gap: 14px; }
+        .inventory-title { font-size: 16px; font-weight: 700; color: #ffffff; padding-left: 4px; }
+        
+        .admin-card { background: var(--card-bg); backdrop-filter: blur(10px); -webkit-backdrop-filter: blur(10px); border: 1px solid var(--card-border); border-radius: 20px; padding: 14px; display: flex; align-items: center; gap: 14px; box-shadow: 0 8px 20px rgba(0,0,0,0.2); }
+        
+        .card-img { width: 70px; height: 70px; background: rgba(255,255,255,0.03); border: 1px solid rgba(255,255,255,0.08); border-radius: 12px; overflow: hidden; display: flex; align-items: center; justify-content: center; flex-shrink: 0; }
+        .card-img img { width: 100%; height: 100%; object-fit: cover; }
+        
+        .card-info { flex: 1; min-width: 0; }
+        .card-info h3 { font-size: 15px; font-weight: 700; white-space: nowrap; overflow: hidden; text-overflow: ellipsis; margin-bottom: 2px; }
+        .card-info p { font-size: 13px; color: var(--secondary-text); font-weight: 600; }
+        
+        /* Controles rápidos de Stock */
+        .stock-controller { display: flex; align-items: center; gap: 8px; margin-top: 6px; background: rgba(0,0,0,0.2); padding: 4px 8px; border-radius: 10px; width: max-content; }
+        .stock-btn { background: rgba(255,255,255,0.08); border: 1px solid rgba(255,255,255,0.15); width: 26px; height: 26px; border-radius: 6px; color: white; font-weight: 700; font-size: 14px; cursor: pointer; display: flex; align-items: center; justify-content: center; }
+        .stock-value { font-size: 13px; font-weight: 700; min-width: 20px; text-align: center; }
+        .stock-value.low { color: var(--accent-red); }
+        
+        /* Botones de acción lateral */
+        .card-actions { display: flex; flex-direction: column; gap: 8px; }
+        .action-btn { background: none; border: none; font-size: 12px; font-weight: 700; cursor: pointer; padding: 6px 12px; border-radius: 8px; text-align: center; text-transform: uppercase; }
+        .btn-edit { background: rgba(10, 132, 255, 0.15); color: var(--accent-blue); }
+        .btn-delete { background: rgba(255, 69, 58, 0.15); color: var(--accent-red); }
+
+        /* Ajustes responsive para pantallas muy chicas */
+        @media (max-width: 400px) {
+            .form-grid { grid-template-columns: 1fr; }
+            .full-width { grid-column: span 1; }
+            .admin-card { position: relative; padding-bottom: 50px; }
+            .card-actions { position: absolute; bottom: 12px; right: 14px; flex-direction: row; }
         }
     </style>
 </head>
 <body>
 
-    <div class="admin-container">
-        <header>
-            <h1>Amakha Paris 360</h1>
-            <p>Panel de Administración y Control de Stock</p>
-        </header>
+    <div class="bg-shape shape1"></div>
+    <div class="bg-shape shape2"></div>
 
-        <!-- Formulario de ingreso -->
-        <div class="admin-box">
-            <h2>Añadir Nuevo Perfume</h2>
-            
-            <div class="form-group">
-                <label>Nombre del Perfume</label>
-                <input type="text" id="nombre" placeholder="Ej: Fragancia Masculina Amakha" required>
-            </div>
-            
-            <div class="form-group">
-                <label>Precio de Venta ($)</label>
-                <input type="number" id="precio" placeholder="Ej: 450" required>
-            </div>
-            
-            <div class="form-group">
-                <label>Cantidad Inicial en Stock</label>
-                <input type="number" id="stock" placeholder="Ej: 10" required>
-            </div>
-            
-            <div class="form-group">
-                <label>Enlace Directo de la Imagen (ImgBB)</label>
-                <input type="text" id="fotoUrl" placeholder="Debe ser la URL completa que termina en .jpg o .png" required>
-            </div>
-            
-            <!-- Contenedor Vista Previa en Vivo -->
-            <div class="preview-box" id="preview-box">
-                <p style="font-size: 11px; margin-bottom: 6px; color: var(--accent-color); font-weight: 600;">Vista previa de la imagen:</p>
-                <img id="img-live-preview" src="" alt="Previsualización">
-            </div>
-            
-            <button id="btn-add">Guardar en Catálogo</button>
-        </div>
+    <header>
+        <h1>Panel de Control</h1>
+        <p>Amakha Paris 360 • Inventario General</p>
+    </header>
 
-        <!-- Lista de Inventario -->
-        <div class="admin-box">
-            <h2>Inventario Actual (Tiempo Real)</h2>
-            <div id="inventory-list">Cargando inventario conectado...</div>
-        </div>
-    </div>
+    <main class="admin-container">
+        
+        <!-- Sección Formulario dinámico -->
+        <section class="form-section">
+            <h2 id="form-title">Agregar Nuevo Perfume</h2>
+            <form id="perfume-form">
+                <div class="form-grid">
+                    <div class="form-group full-width">
+                        <label for="p-nombre">Nombre del Perfume</label>
+                        <input type="text" id="p-nombre" placeholder="Ej: Fragancia VIP Masculina" required>
+                    </div>
+                    <div class="form-group">
+                        <label for="p-precio">Precio ($)</label>
+                        <input type="number" id="p-precio" placeholder="Ej: 1250" required min="0">
+                    </div>
+                    <div class="form-group">
+                        <label for="p-stock">Stock Inicial</label>
+                        <input type="number" id="p-stock" placeholder="Ej: 10" required min="0">
+                    </div>
+                    <div class="form-group full-width">
+                        <label for="p-foto">URL de la Imagen (Enlace Web)</label>
+                        <input type="url" id="p-foto" placeholder="https://enlace-de-la-foto.com/imagen.jpg">
+                    </div>
+                    <div class="form-group full-width">
+                        <label for="p-descripcion">Descripción (Notas aromáticas, duración)</label>
+                        <textarea id="p-descripcion" placeholder="Ej: Notas de salida cítricas con fondo amaderado intenso..."></textarea>
+                    </div>
+                </div>
+                
+                <div class="form-actions">
+                    <button type="button" class="btn btn-secondary" id="btn-cancel">Cancelar</button>
+                    <button type="submit" class="btn btn-primary" id="btn-submit">Guardar Perfume</button>
+                </div>
+            </form>
+        </section>
 
-    <!-- SDK de Firebase Realtime Database v10 -->
+        <!-- Sección Inventario en vivo -->
+        <section class="inventory-section">
+            <div class="inventory-title">Productos en Base de Datos</div>
+            <div id="admin-inventory-list">
+                <p style="text-align: center; color: var(--secondary-text); padding: 20px;">Conectando al inventario...</p>
+            </div>
+        </section>
+
+    </main>
+
     <script type="module">
         import { initializeApp } from "https://www.gstatic.com/firebasejs/10.8.1/firebase-app.js";
-        import { getDatabase, ref, push, onValue, update, remove } from "https://www.gstatic.com/firebasejs/10.8.1/firebase-database.js";
+        import { getDatabase, ref, onValue, push, set, update, remove, runTransaction } from "https://www.gstatic.com/firebasejs/10.8.1/firebase-database.js";
 
-        // Configuración exacta sincronizada con tu catálogo
+        // Idéntica configuración que tu aplicación principal
         const firebaseConfig = {
             apiKey: "AIzaSyDtT22MM01MGoNosSBNHEdvKQlGu8ghIBQ",
             authDomain: "inventario-de-local.firebaseapp.com",
@@ -263,119 +194,158 @@
         const db = getDatabase(app);
         const perfumesRef = ref(db, "perfumes");
 
-        // Escuchador de la URL para activar la previsualización de la foto antes de guardarla
-        document.getElementById('fotoUrl').addEventListener('input', (e) => {
-            const url = e.target.value.trim();
-            const previewBox = document.getElementById('preview-box');
-            const imgPreview = document.getElementById('img-live-preview');
-            
-            if (url) {
-                imgPreview.src = url;
-                previewBox.style.display = 'block';
-            } else {
-                previewBox.style.display = 'none';
-            }
-        });
+        // Estado interno de la app admin
+        let currentEditingId = null; 
+        let globalProducts = {};
 
-        // Guardar perfume nuevo en la base de datos
-        document.getElementById('btn-add').addEventListener('click', async () => {
-            const nombre = document.getElementById('nombre').value.trim();
-            const precio = Number(document.getElementById('precio').value);
-            const stock = Number(document.getElementById('stock').value);
-            const fotoUrl = document.getElementById('fotoUrl').value.trim();
+        const perfumeForm = document.getElementById('perfume-form');
+        const formTitle = document.getElementById('form-title');
+        const btnSubmit = document.getElementById('btn-submit');
+        const btnCancel = document.getElementById('btn-cancel');
+        const inventoryListContainer = document.getElementById('admin-inventory-list');
 
-            if (nombre && precio >= 0 && stock >= 0 && fotoUrl) {
-                
-                // Validación para advertir si copiaste el enlace erróneo de la página web de ImgBB
-                if (fotoUrl.includes('imgbb.com') && !fotoUrl.includes('i.ibb.co')) {
-                    alert("⚠️ ¡Atención! El enlace ingresado parece ser el link del visor web de ImgBB y no la 'URL de la imagen'. Asegúrate de usar el link directo que termina en .jpg o .png para que tus clientes puedan visualizarlo.");
-                }
+        // Campos del Formulario
+        const inputNombre = document.getElementById('p-nombre');
+        const inputPrecio = document.getElementById('p-precio');
+        const inputStock = document.getElementById('p-stock');
+        const inputFoto = document.getElementById('p-foto');
+        const inputDescripcion = document.getElementById('p-descripcion');
 
-                try {
-                    await push(perfumesRef, { nombre, precio, stock, fotoUrl });
-                    alert("¡Perfume ingresado correctamente!");
-                    
-                    // Resetear formulario
-                    document.getElementById('nombre').value = '';
-                    document.getElementById('precio').value = '';
-                    document.getElementById('stock').value = '';
-                    document.getElementById('fotoUrl').value = '';
-                    document.getElementById('preview-box').style.display = 'none';
-                } catch (error) {
-                    alert("Error al subir los datos: " + error.message);
-                }
-            } else {
-                alert("Por favor, rellena todos los casilleros con datos válidos.");
-            }
-        });
-
-        // Escuchar cambios globales (Tus modificaciones manuales o compras de clientes)
+        // 1. Escuchar la Base de Datos en Tiempo Real y Renderizar
         onValue(perfumesRef, (snapshot) => {
-            const inventoryList = document.getElementById('inventory-list');
-            inventoryList.innerHTML = '';
+            inventoryListContainer.innerHTML = '';
 
             if (!snapshot.exists()) {
-                inventoryList.innerHTML = '<p style="text-align:center; color:var(--secondary-text); margin: 10px 0;">No tienes artículos en tu inventario actual.</p>';
+                inventoryListContainer.innerHTML = '<p style="text-align: center; color: var(--secondary-text); padding: 20px;">No hay ningún perfume registrado.</p>';
+                globalProducts = {};
                 return;
             }
 
-            const data = snapshot.val();
+            globalProducts = snapshot.val();
 
-            Object.keys(data).forEach((id) => {
-                const perfume = data[id];
-                
-                // Muestra un marcador de error visual elegante si el link guardado estuviera dañado
-                const imgTag = perfume.fotoUrl ? `<img src="${perfume.fotoUrl}" alt="" onerror="this.onerror=null; this.src='https://via.placeholder.com/50?text=Error';">` : `<div style="width:52px; height:52px; background:#ccc; margin-right:14px; border-radius:8px;"></div>`;
+            Object.keys(globalProducts).forEach((id) => {
+                const p = globalProducts[id];
+                const card = document.createElement('div');
+                card.className = 'admin-card';
 
-                const item = document.createElement('div');
-                item.className = 'perfume-item';
-                item.innerHTML = `
-                    <div class="info-container">
-                        ${imgTag}
-                        <div class="info-details">
-                            <strong>${perfume.nombre}</strong>
-                            <p>Precio: $${perfume.precio} | Stock: <b style="color:${perfume.stock === 0 ? 'red' : 'inherit'};">${perfume.stock} u.</b></p>
+                const fotoSrc = p.fotoUrl ? p.fotoUrl : 'https://via.placeholder.com/150?text=Sin+Foto';
+                const stockAlerta = p.stock <= 3 ? 'low' : '';
+
+                card.innerHTML = `
+                    <div class="card-img">
+                        <img src="${fotoSrc}" alt="${p.nombre}" onerror="this.onerror=null; this.src='https://via.placeholder.com/150?text=Error';">
+                    </div>
+                    <div class="card-info">
+                        <h3>${p.nombre}</h3>
+                        <p>Precio: $${p.precio}</p>
+                        <div class="stock-controller">
+                            <span style="font-size:11px; color:var(--secondary-text); font-weight:700; margin-right:4px;">STOCK:</span>
+                            <button class="stock-btn" onclick="window.amp_quickStock('${id}', -1)">-</button>
+                            <span class="stock-value ${stockAlerta}">${p.stock}</span>
+                            <button class="stock-btn" onclick="window.amp_quickStock('${id}', 1)">+</button>
                         </div>
                     </div>
-                    <div class="actions">
-                        <button class="btn-inc" data-id="${id}" data-stock="${perfume.stock}">+1</button>
-                        <button class="btn-dec" data-id="${id}" data-stock="${perfume.stock}">-1</button>
-                        <button class="btn-delete" data-id="${id}">Borrar</button>
+                    <div class="card-actions">
+                        <button class="action-btn btn-edit" onclick="window.amp_startEdit('${id}')">Editar</button>
+                        <button class="action-btn btn-delete" onclick="window.amp_deleteProduct('${id}')">Eliminar</button>
                     </div>
                 `;
-                inventoryList.appendChild(item);
+                inventoryListContainer.appendChild(card);
             });
-
-            // Sincronizadores manuales para los botones de control de stock
-            document.querySelectorAll('.btn-inc').forEach(btn => {
-                btn.addEventListener('click', async (e) => {
-                    const id = e.target.getAttribute('data-id');
-                    const currentStock = Number(e.target.getAttribute('data-stock'));
-                    await update(ref(db, `perfumes/${id}`), { stock: currentStock + 1 });
-                });
-            });
-
-            document.querySelectorAll('.btn-dec').forEach(btn => {
-                btn.addEventListener('click', async (e) => {
-                    const id = e.target.getAttribute('data-id');
-                    const currentStock = Number(e.target.getAttribute('data-stock'));
-                    if (currentStock > 0) {
-                        await update(ref(db, `perfumes/${id}`), { stock: currentStock - 1 });
-                    }
-                });
-            });
-
-            document.querySelectorAll('.btn-delete').forEach(btn => {
-                btn.addEventListener('click', async (e) => {
-                    const id = e.target.getAttribute('data-id');
-                    if (confirm("¿Estás completamente seguro de que deseas remover este perfume del catálogo general?")) {
-                        await remove(ref(db, `perfumes/${id}`));
-                    }
-                });
-            });
-        }, (error) => {
-            document.getElementById('inventory-list').innerHTML = `<p style="color:red; text-align:center;">Fallo de enlace con Firebase: ${error.message}</p>`;
         });
+
+        // 2. Evento del Botón Guardar (Agregar o Confirmar Modificación)
+        perfumeForm.addEventListener('submit', async (e) => {
+            e.preventDefault();
+
+            const datosPerfume = {
+                nombre: inputNombre.value.trim(),
+                precio: parseFloat(inputPrecio.value),
+                stock: parseInt(inputStock.value),
+                fotoUrl: inputFoto.value.trim(),
+                descripcion: inputDescripcion.value.trim()
+            };
+
+            try {
+                if (currentEditingId) {
+                    // Acción de Editar
+                    const itemRef = ref(db, `perfumes/${currentEditingId}`);
+                    await set(itemRef, datosPerfume);
+                    alert("¡Producto modificado con éxito!");
+                } else {
+                    // Acción de Agregar Nuevo
+                    const nuevoPerfumeRef = push(perfumesRef);
+                    await set(nuevoPerfumeRef, datosPerfume);
+                    alert("¡Producto agregado al catálogo!");
+                }
+                resetearFormulario();
+            } catch (err) {
+                console.error(err);
+                alert("Ocurrió un error guardando el producto.");
+            }
+        });
+
+        // 3. Funciones Globales de Operación (Expuestas a Window para onclick en strings HTML)
+        window.amp_startEdit = function(id) {
+            const p = globalProducts[id];
+            if (!p) return;
+
+            currentEditingId = id;
+            formTitle.innerText = "Modificar Perfume";
+            btnSubmit.innerText = "Guardar Cambios";
+            btnCancel.style.display = "block";
+
+            // Autocompletar inputs
+            inputNombre.value = p.nombre;
+            inputPrecio.value = p.precio;
+            inputStock.value = p.stock;
+            inputFoto.value = p.fotoUrl || '';
+            inputDescripcion.value = p.descripcion || '';
+
+            // Hacer scroll suave hacia arriba para que el admin vea el formulario cargado en el celular
+            window.scrollTo({ top: 0, behavior: 'smooth' });
+        };
+
+        window.amp_deleteProduct = async function(id) {
+            const p = globalProducts[id];
+            if (!p) return;
+
+            const confirmar = confirm(`¿Estás seguro de que quieres eliminar por completo el perfume "${p.nombre}"?`);
+            if (confirmar) {
+                try {
+                    const itemRef = ref(db, `perfumes/${id}`);
+                    await remove(itemRef);
+                    if (currentEditingId === id) resetearFormulario();
+                } catch (err) {
+                    alert("No se pudo eliminar el producto.");
+                }
+            }
+        };
+
+        // Cambios rápidos de stock en bodega (+1 / -1) utilizando transacciones seguras
+        window.amp_quickStock = async function(id, cambio) {
+            const stockRef = ref(db, `perfumes/${id}/stock`);
+            try {
+                await runTransaction(stockRef, (currentStock) => {
+                    if (currentStock === null) return 0;
+                    const nuevoStock = currentStock + cambio;
+                    return nuevoStock < 0 ? 0 : nuevoStock; // Evitar stocks negativos
+                });
+            } catch (err) {
+                console.error("Error actualizando stock rápido", err);
+            }
+        };
+
+        // Cancelar edición manual
+        btnCancel.addEventListener('click', resetearFormulario);
+
+        function resetearFormulario() {
+            currentEditingId = null;
+            perfumeForm.reset();
+            formTitle.innerText = "Agregar Nuevo Perfume";
+            btnSubmit.innerText = "Guardar Perfume";
+            btnCancel.style.display = "none";
+        }
     </script>
 </body>
 </html>
