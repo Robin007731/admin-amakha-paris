@@ -4,7 +4,6 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no, viewport-fit=cover">
     <title>Panel de Control - Fragancias360</title>
-    <!-- Carga de Tailwind CSS para maquetación ágil y moderna -->
     <script src="https://cdn.tailwindcss.com"></script>
     <style>
         :root {
@@ -12,338 +11,112 @@
             --secondary-text: #a1a1a6;
             --accent-gold: #fee082;
             --accent-gold-dark: #d4af37;
-            --accent-red: #ff453a;
-            --accent-blue: #0a84ff;
-            --accent-green: #30d158;
             --bg-gradient: linear-gradient(135deg, #09090b 0%, #121214 100%);
             --card-bg: rgba(22, 22, 26, 0.7);
             --card-border: rgba(255, 255, 255, 0.08);
             --input-bg: rgba(255, 255, 255, 0.04);
-            --modal-bg: rgba(15, 15, 18, 0.95);
         }
-
-        /* Reseteo global optimizado */
-        * { 
-            box-sizing: border-box; 
-            margin: 0; 
-            padding: 0; 
-            font-family: -apple-system, BlinkMacSystemFont, "SF Pro Display", "SF Pro Text", "Segoe UI", Roboto, sans-serif; 
-            -webkit-tap-highlight-color: transparent; 
-        }
-        
-        body { 
-            background: var(--bg-gradient); 
-            background-attachment: fixed; 
-            color: var(--primary-text); 
-            min-height: 100vh; 
-            padding-bottom: calc(50px + env(safe-area-inset-bottom)); 
-            overflow-x: hidden;
-            text-rendering: optimizeLegibility;
-            -webkit-font-smoothing: antialiased;
-        }
-
-        /* Degradados y decoraciones de fondo satinadas */
-        .bg-shape { position: fixed; border-radius: 50%; filter: blur(100px); z-index: -1; opacity: 0.35; pointer-events: none; }
-        .shape1 { width: 350px; height: 350px; background: rgba(214, 175, 55, 0.08); top: -100px; left: -100px; }
-        .shape2 { width: 300px; height: 300px; background: rgba(138, 43, 226, 0.06); bottom: 10%; right: -100px; }
-
-        /* Estilización de scrollbars */
-        ::-webkit-scrollbar { width: 6px; height: 6px; }
-        ::-webkit-scrollbar-track { background: rgba(255, 255, 255, 0.01); }
-        ::-webkit-scrollbar-thumb { background: rgba(214, 175, 55, 0.3); border-radius: 10px; }
-
-        /* Estilo Vidrio Esmerilado Premium */
-        .glass-panel {
-            background: var(--card-bg);
-            backdrop-filter: blur(20px);
-            -webkit-backdrop-filter: blur(20px);
-            border: 1px solid var(--card-border);
-        }
-
-        /* Clases de utilidad para inputs consistentes */
-        .luxury-input {
-            background: var(--input-bg);
-            border: 1px solid rgba(255, 255, 255, 0.08);
-            border-radius: 12px;
-            padding: 12px 14px;
-            color: #ffffff;
-            font-size: 14px;
-            transition: all 0.3s cubic-bezier(0.16, 1, 0.3, 1);
-            outline: none;
-        }
-        .luxury-input:focus {
-            border-color: var(--accent-gold-dark);
-            background: rgba(255, 255, 255, 0.08);
-            box-shadow: 0 0 15px rgba(212, 175, 55, 0.15);
-        }
-
-        /* Animaciones para listas y modales */
-        @keyframes fadeIn {
-            from { opacity: 0; transform: translateY(10px); }
-            to { opacity: 1; transform: translateY(0); }
-        }
-        .animate-fade-in {
-            animation: fadeIn 0.4s cubic-bezier(0.16, 1, 0.3, 1) forwards;
+        body {
+            background: var(--bg-gradient);
+            background-attachment: fixed;
+            color: var(--primary-text);
         }
     </style>
 </head>
-<body>
+<body class="min-h-screen p-4 md:p-8 selection:bg-amber-500 selection:text-black">
 
-    <div class="bg-shape shape1"></div>
-    <div class="bg-shape shape2"></div>
-
-    <!-- Encabezado Fijo Inteligente -->
-    <header class="sticky top-0 z-50 glass-panel border-b border-white/10 px-6 py-4 flex flex-col md:flex-row justify-between items-center gap-4">
-        <div class="text-center md:text-left">
-            <h1 class="text-2xl font-black tracking-tight bg-gradient-to-r from-[#fee082] via-[#d4af37] to-[#a37c1e] bg-clip-text text-transparent">
-                Fragancias 360
-            </h1>
-            <p class="text-xs text-[#a1a1a6] mt-0.5 font-medium tracking-wide uppercase">Consola de Administración e Inventario</p>
-        </div>
-        <div class="flex items-center gap-3">
-            <span class="inline-flex h-2 w-2 rounded-full bg-[#30d158] animate-pulse"></span>
-            <span id="db-status-badge" class="text-xs font-semibold text-[#a1a1a6] bg-white/5 border border-white/10 px-3 py-1.5 rounded-full">
-                Sincronizado en Vivo
-            </span>
-        </div>
-    </header>
-
-    <main class="max-w-7xl mx-auto px-4 py-8 flex flex-col gap-8">
-
-        <!-- SECCIÓN 0: INDICADORES CLAVE (ESTADÍSTICAS) -->
-        <section class="grid grid-cols-2 lg:grid-cols-4 gap-4">
-            <div class="glass-panel p-5 rounded-2xl flex flex-col justify-between">
-                <span class="text-xs font-bold text-neutral-400 uppercase tracking-wider">Fragancias Totales</span>
-                <span id="stat-total-perfumes" class="text-3xl font-black text-white mt-2">0</span>
-                <span class="text-[10px] text-neutral-500 mt-1">Registradas en el catálogo</span>
+    <div class="max-w-6xl mx-auto space-y-8">
+        
+        <header class="flex flex-col md:flex-row md:items-center md:justify-between border-b border-zinc-800 pb-6 gap-4">
+            <div>
+                <h1 class="text-3xl font-extrabold tracking-tight bg-gradient-to-r from-amber-200 via-amber-400 to-amber-600 bg-clip-text text-transparent">Fragancias360</h1>
+                <p class="text-zinc-400 text-sm mt-1">Consola Central de Gestión de Inventario & Control Operativo</p>
             </div>
-            <div class="glass-panel p-5 rounded-2xl flex flex-col justify-between">
-                <span class="text-xs font-bold text-neutral-400 uppercase tracking-wider">Valor Estimado</span>
-                <span id="stat-total-valuation" class="text-3xl font-black text-[#fee082] mt-2">$0</span>
-                <span class="text-[10px] text-neutral-500 mt-1">Suma del stock valorizado</span>
-            </div>
-            <div class="glass-panel p-5 rounded-2xl flex flex-col justify-between">
-                <span class="text-xs font-bold text-neutral-400 uppercase tracking-wider">Stock Crítico</span>
-                <span id="stat-low-stock" class="text-3xl font-black text-[#ff453a] mt-2">0</span>
-                <span class="text-[10px] text-neutral-500 mt-1">Productos con stock menor a 3</span>
-            </div>
-            <div class="glass-panel p-5 rounded-2xl flex flex-col justify-between">
-                <span class="text-xs font-bold text-neutral-400 uppercase tracking-wider">Banner Publicitario</span>
-                <span id="stat-pub-status" class="text-sm font-extrabold text-neutral-300 mt-4 bg-white/5 px-2.5 py-1 rounded-lg w-max border border-white/10">Inactivo</span>
-                <span class="text-[10px] text-neutral-500 mt-2">Estado del espacio lateral</span>
-            </div>
-        </section>
+        </header>
 
-        <!-- SECCIÓN 1: ADMINISTRACIÓN DE PUBLICIDAD LATERAL -->
-        <section class="glass-panel rounded-3xl p-6 border-l-4 border-[#30d158]">
-            <div class="flex items-center gap-3 mb-4">
-                <span class="text-xl">📢</span>
-                <h2 class="text-lg font-extrabold text-white tracking-tight uppercase">Espacio Publicitario Lateral</h2>
-            </div>
-            <form id="publicidad-form" class="grid grid-cols-1 md:grid-cols-2 gap-4">
-                <div class="flex flex-col gap-1.5">
-                    <label for="pub-foto" class="text-xs font-bold text-neutral-400">URL de la Imagen (Resolución sugerida: 300x600 o similar)</label>
-                    <input type="url" id="pub-foto" class="luxury-input" placeholder="https://dominio.com/banner.jpg">
-                </div>
-                <div class="flex flex-col gap-1.5">
-                    <label for="pub-link" class="text-xs font-bold text-neutral-400">Enlace de Destino (WhatsApp, Web o Redes)</label>
-                    <input type="url" id="pub-link" class="luxury-input" placeholder="https://wa.me/59899XXXXXX">
-                </div>
-                <div class="md:col-span-2 flex flex-col sm:flex-row sm:items-center sm:justify-between gap-4 mt-2">
-                    <label class="flex items-center gap-3 cursor-pointer bg-black/30 p-3 rounded-xl border border-white/5 w-full sm:w-auto">
-                        <input type="checkbox" id="pub-activo" class="accent-[#d4af37] h-5 w-5 rounded">
-                        <span class="text-sm font-semibold text-white">Mostrar este anuncio dinámico en la web principal</span>
-                    </label>
-                    <button type="submit" class="w-full sm:w-auto bg-[#30d158] text-black font-extrabold text-xs tracking-wider uppercase px-6 py-3.5 rounded-xl hover:brightness-110 active:scale-95 transition-all">
-                        Actualizar Publicidad
-                    </button>
-                </div>
-            </form>
-        </section>
-
-        <!-- SECCIÓN 2: FORMULARIO DINÁMICO COMPLETO (FICHA PREMIUM) -->
-        <section class="glass-panel rounded-3xl p-6 border-t border-white/10 relative">
-            <div class="flex flex-col lg:flex-row justify-between lg:items-center gap-4 mb-6 pb-4 border-b border-white/5">
-                <div>
-                    <h2 id="form-title" class="text-xl font-black text-[#fee082] tracking-tight">Agregar Nuevo Perfume</h2>
-                    <p class="text-xs text-neutral-400 mt-1">Llena los campos manualmente o selecciona una plantilla oficial Amakha a continuación.</p>
-                </div>
-                
-                <!-- Autocompletado inteligente con perfumes oficiales -->
-                <div class="flex flex-col sm:flex-row items-start sm:items-center gap-2">
-                    <label for="template-select" class="text-xs font-extrabold text-[#fee082] whitespace-nowrap bg-[#fee082]/10 px-2.5 py-1.5 rounded-lg border border-[#fee082]/20">
-                        ⚡ AUTOFILTRO AMKHA:
-                    </label>
-                    <select id="template-select" class="luxury-input py-2 text-xs font-bold w-full sm:w-64">
-                        <option value="">-- Cargar Plantilla Oficial --</option>
-                    </select>
-                </div>
-            </div>
-
-            <form id="perfume-form" class="grid grid-cols-1 md:grid-cols-3 gap-5">
-                
-                <!-- BLOQUE 1: Datos Base -->
-                <div class="md:col-span-2 grid grid-cols-1 sm:grid-cols-2 gap-4">
-                    <div class="flex flex-col gap-1.5">
-                        <label for="p-nombre" class="text-xs font-bold text-neutral-400">Nombre del Perfume</label>
-                        <input type="text" id="p-nombre" class="luxury-input" placeholder="Ej: 521 VIP Black" required>
-                    </div>
-                    <div class="flex flex-col gap-1.5">
-                        <label for="p-inspired" class="text-xs font-bold text-neutral-400">Referencia Olfativa (Inspirado en)</label>
-                        <input type="text" id="p-inspired" class="luxury-input" placeholder="Ej: 212 VIP Black">
-                    </div>
-                    <div class="flex flex-col gap-1.5">
-                        <label for="p-reference" class="text-xs font-bold text-neutral-400">Marca / Diseñador Original</label>
-                        <input type="text" id="p-reference" class="luxury-input" placeholder="Ej: Carolina Herrera">
-                    </div>
-                    <div class="grid grid-cols-2 gap-3">
-                        <div class="flex flex-col gap-1.5">
-                            <label for="p-precio" class="text-xs font-bold text-neutral-400">Precio ($)</label>
-                            <input type="number" id="p-precio" class="luxury-input" placeholder="Ej: 1590" required min="0">
-                        </div>
-                        <div class="flex flex-col gap-1.5">
-                            <label for="p-stock" class="text-xs font-bold text-neutral-400">Stock Disponible</label>
-                            <input type="number" id="p-stock" class="luxury-input" placeholder="Ej: 8" required min="0">
-                        </div>
-                    </div>
-                </div>
-
-                <!-- BLOQUE 2: Clasificación -->
-                <div class="flex flex-col gap-4 bg-black/20 p-4 rounded-2xl border border-white/5">
-                    <div class="flex flex-col gap-1.5">
-                        <label for="p-genero" class="text-xs font-bold text-neutral-400">Género</label>
-                        <select id="p-genero" class="luxury-input" required>
-                            <option value="Femenino">Femenino</option>
-                            <option value="Masculino">Masculino</option>
-                            <option value="Unissex">Unisex (Compartida)</option>
-                            <option value="Infantil">Infantil</option>
-                        </select>
-                    </div>
-                    <div class="flex flex-col gap-1.5">
-                        <label for="p-intensidad" class="text-xs font-bold text-neutral-400">Intensidad</label>
-                        <select id="p-intensidad" class="luxury-input" required>
-                            <option value="Moderado">Moderado</option>
-                            <option value="Suave">Suave</option>
-                            <option value="Intenso">Intenso</option>
-                        </select>
-                    </div>
-                    <div class="flex flex-col gap-1.5">
-                        <label for="p-familia" class="text-xs font-bold text-neutral-400">Familia Olfativa</label>
-                        <input type="text" id="p-familia" class="luxury-input" placeholder="Ej: Aromático Fougére" required>
-                    </div>
-                </div>
-
-                <!-- BLOQUE 3: Pirámide Olfativa Completa -->
-                <div class="md:col-span-3 grid grid-cols-1 sm:grid-cols-3 gap-4 bg-white/5 p-4 rounded-2xl border border-white/5">
-                    <div class="flex flex-col gap-1.5">
-                        <label for="p-topNotes" class="text-xs font-bold text-neutral-300">Notas de Salida (Entrada)</label>
-                        <input type="text" id="p-topNotes" class="luxury-input" placeholder="Ej: Lavanda, Absenta, Anís">
-                    </div>
-                    <div class="flex flex-col gap-1.5">
-                        <label for="p-heartNotes" class="text-xs font-bold text-neutral-300">Notas de Corazón (Cuerpo)</label>
-                        <input type="text" id="p-heartNotes" class="luxury-input" placeholder="Ej: Jazmín, Gardenia">
-                    </div>
-                    <div class="flex flex-col gap-1.5">
-                        <label for="p-baseNotes" class="text-xs font-bold text-neutral-300">Notas de Fondo (Base fija)</label>
-                        <input type="text" id="p-baseNotes" class="luxury-input" placeholder="Ej: Vainilla, Almizcle, Sándalo">
-                    </div>
-                </div>
-
-                <!-- BLOQUE 4: Multimedia y Descripciones -->
-                <div class="md:col-span-3 grid grid-cols-1 md:grid-cols-2 gap-4">
-                    <div class="flex flex-col gap-1.5">
-                        <label for="p-foto" class="text-xs font-bold text-neutral-400">Enlace (URL) de la Imagen del Producto (Opcional)</label>
-                        <input type="url" id="p-foto" class="luxury-input" placeholder="https://servidor.com/perfume.jpg">
-                    </div>
-                    <div class="flex flex-col gap-1.5">
-                        <label for="p-descripcion" class="text-xs font-bold text-neutral-400">Descripción Narrativa / Experiencia Sensorial</label>
-                        <textarea id="p-descripcion" class="luxury-input h-[46px] resize-none" placeholder="Escribe detalles únicos, duración aproximada, etc."></textarea>
-                    </div>
-                </div>
-
-                <!-- Acciones del Formulario -->
-                <div class="md:col-span-3 flex justify-end gap-3 mt-4 pt-4 border-t border-white/5">
-                    <button type="button" class="px-5 py-3 rounded-xl bg-white/5 hover:bg-white/10 font-bold text-xs tracking-wider text-neutral-300 uppercase transition-all duration-200" id="btn-cancel" style="display:none;">
-                        Cancelar Modificación
-                    </button>
-                    <button type="submit" class="px-7 py-3.5 rounded-xl bg-gradient-to-r from-[#fee082] to-[#d4af37] hover:brightness-110 text-black font-extrabold text-xs tracking-wider uppercase transition-all duration-200 shadow-lg shadow-[#d4af37]/10" id="btn-submit">
-                        Guardar Perfume
-                    </button>
-                </div>
-            </form>
-        </section>
-
-        <!-- SECCIÓN 3: INVENTARIO EN VIVO & BUSCADOR INTELIGENTE -->
-        <section class="flex flex-col gap-4">
+        <div class="bg-zinc-900/50 border border-zinc-800/80 rounded-2xl p-6 backdrop-blur-md">
+            <h2 id="form-title" class="text-xl font-bold text-white mb-4">Agregar Nuevo Perfume</h2>
             
-            <!-- Barra de control de catálogo -->
-            <div class="flex flex-col md:flex-row justify-between items-center gap-4 bg-black/25 p-4 rounded-2xl border border-white/5">
-                <div class="w-full md:w-auto">
-                    <h3 class="text-lg font-black text-white">Catálogo de Productos</h3>
-                    <p class="text-xs text-neutral-400 mt-0.5">Controla stocks, edita o elimina perfumes de la base de datos en vivo.</p>
-                </div>
-                
-                <div class="flex flex-col sm:flex-row gap-3 w-full md:w-auto items-stretch sm:items-center">
-                    <!-- Buscador directo -->
-                    <div class="relative w-full sm:w-64">
-                        <span class="absolute left-3.5 top-3.5 text-xs text-neutral-500">🔍</span>
-                        <input type="text" id="admin-search-bar" class="luxury-input pl-9 py-2.5 w-full text-xs" placeholder="Buscar por nombre, familia, equivalencia...">
+            <form id="perfume-form" class="space-y-4">
+                <div class="grid grid-cols-1 md:grid-cols-2 gap-4">
+                    <div>
+                        <label class="block text-xs font-semibold text-zinc-400 mb-1">Nombre Completo de la Fragancia</label>
+                        <input type="text" id="p-nombre" required class="w-full bg-zinc-950 border border-zinc-800 rounded-xl px-4 py-2.5 text-sm text-white focus:outline-none focus:border-amber-400">
                     </div>
-                    <!-- Filtro por género -->
-                    <select id="admin-genre-filter" class="luxury-input py-2.5 text-xs">
-                        <option value="all">Todos los Géneros</option>
-                        <option value="Femenino">Femeninos</option>
-                        <option value="Masculino">Masculinos</option>
-                        <option value="Unissex">Unisex</option>
-                        <option value="Infantil">Infantiles</option>
+                    <div>
+                        <label class="block text-xs font-semibold text-zinc-400 mb-1">Género / Clasificación</label>
+                        <select id="p-genero" required class="w-full bg-zinc-950 border border-zinc-800 rounded-xl px-4 py-2.5 text-sm text-white focus:outline-none focus:border-amber-400">
+                            <option value="Masculino">Masculino</option>
+                            <option value="Femenino">Femenino</option>
+                            <option value="Unisex">Unisex</option>
+                        </select>
+                    </div>
+                </div>
+
+                <div class="grid grid-cols-2 gap-4">
+                    <div>
+                        <label class="block text-xs font-semibold text-zinc-400 mb-1">Precio (en pesos $)</label>
+                        <input type="number" id="p-precio" required min="0" class="w-full bg-zinc-950 border border-zinc-800 rounded-xl px-4 py-2.5 text-sm text-white focus:outline-none focus:border-amber-400">
+                    </div>
+                    <div>
+                        <label class="block text-xs font-semibold text-zinc-400 mb-1">Unidades Disponibles (Stock)</label>
+                        <input type="number" id="p-stock" required min="0" class="w-full bg-zinc-950 border border-zinc-800 rounded-xl px-4 py-2.5 text-sm text-white focus:outline-none focus:border-amber-400">
+                    </div>
+                </div>
+
+                <div>
+                    <label class="block text-xs font-semibold text-zinc-400 mb-1">URL Directa de la Fotografía del Perfume</label>
+                    <input type="url" id="p-foto" class="w-full bg-zinc-950 border border-zinc-800 rounded-xl px-4 py-2.5 text-sm text-white focus:outline-none focus:border-amber-400" placeholder="https://ejemplo.com/imagen.jpg">
+                </div>
+
+                <div>
+                    <label class="block text-xs font-semibold text-zinc-400 mb-1">Ficha Informativa / Descripción Detallada</label>
+                    <textarea id="p-descripcion" rows="3" class="w-full bg-zinc-950 border border-zinc-800 rounded-xl px-4 py-2.5 text-sm text-white focus:outline-none focus:border-amber-400" placeholder="Escribe notas aromáticas, familia olfativa, duración promedio, etc."></textarea>
+                </div>
+
+                <div class="flex gap-3 pt-2">
+                    <button type="submit" id="btn-submit" class="flex-1 bg-amber-400 hover:bg-amber-500 text-black font-bold text-sm py-3 px-4 rounded-xl transition-all shadow-lg shadow-amber-500/10">Guardar Perfume</button>
+                    <button type="button" id="btn-cancel" class="bg-zinc-800 hover:bg-zinc-700 text-zinc-300 font-medium text-sm py-3 px-5 rounded-xl transition-all hidden">Cancelar</button>
+                </div>
+            </form>
+        </div>
+
+        <div class="space-y-4">
+            <div class="flex flex-col sm:flex-row gap-4 items-center justify-between bg-zinc-900/30 p-4 rounded-xl border border-zinc-800/60">
+                <h3 class="text-lg font-bold text-white">Inventario en Tiempo Real</h3>
+                
+                <div class="flex flex-col sm:flex-row gap-2 w-full sm:w-auto">
+                    <input type="text" id="admin-search-bar" placeholder="Buscar por marca o nombre..." class="bg-zinc-950 border border-zinc-800 text-zinc-300 text-xs rounded-xl px-4 py-2 focus:outline-none focus:border-amber-400 w-full sm:w-64">
+                    <select id="admin-genre-filter" class="bg-zinc-950 border border-zinc-800 text-zinc-300 text-xs rounded-xl px-3 py-2 focus:outline-none">
+                        <option value="Todos">Todos los Géneros</option>
+                        <option value="Masculino">Masculino</option>
+                        <option value="Femenino">Femenino</option>
+                        <option value="Unisex">Unisex</option>
                     </select>
                 </div>
             </div>
 
-            <!-- Listado de Perfumes -->
             <div id="admin-inventory-list" class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-4">
-                <div class="col-span-full py-16 text-center text-neutral-400">
-                    <span class="text-3xl animate-bounce inline-block">⏳</span>
-                    <p class="mt-2 text-sm font-semibold">Cargando base de datos en tiempo real...</p>
-                </div>
-            </div>
-        </section>
-    </main>
-
-    <!-- MODAL DE CONFIRMACIÓN LUXURY (Para Eliminar Productos) -->
-    <div id="confirm-modal" class="fixed inset-0 z-[1000] hidden flex items-center justify-center p-4">
-        <!-- Fondo desenfocado -->
-        <div class="absolute inset-0 bg-black/80 backdrop-filter backdrop-blur-md"></div>
-        <!-- Contenido Modal -->
-        <div class="glass-panel relative w-full max-w-md p-6 rounded-3xl animate-fade-in shadow-2xl border border-red-500/20">
-            <div class="text-center">
-                <span class="text-4xl inline-block mb-3">⚠️</span>
-                <h3 class="text-lg font-black text-white mb-2">¿Eliminar esta fragancia?</h3>
-                <p id="confirm-modal-text" class="text-sm text-neutral-400 leading-relaxed">
-                    Esta acción es destructiva e irreversible. El producto será borrado de la base de datos de forma permanente.
-                </p>
-            </div>
-            <div class="flex gap-3 mt-6">
-                <button id="btn-confirm-cancel" class="flex-1 py-3 bg-white/5 hover:bg-white/10 text-neutral-300 font-extrabold text-xs tracking-wider uppercase rounded-xl transition-all">
-                    Mantener Producto
-                </button>
-                <button id="btn-confirm-action" class="flex-1 py-3 bg-[#ff453a] hover:brightness-110 text-white font-extrabold text-xs tracking-wider uppercase rounded-xl transition-all shadow-lg shadow-red-500/10">
-                    Confirmar Borrado
-                </button>
+                <p class="text-zinc-500 text-xs py-4 text-center col-span-full">Sincronizando con base de datos remota...</p>
             </div>
         </div>
-    </div>
 
-    <!-- TOAST DE NOTIFICACIONES PREMIUM -->
-    <div id="toast-notification" class="fixed top-6 left-1/2 -translate-x-1/2 z-[2000] transform -translate-y-24 opacity-0 scale-95 pointer-events-none transition-all duration-500 flex items-center gap-3 glass-panel px-5 py-4 rounded-2xl shadow-2xl max-w-[90vw] border-l-4">
-        <span id="toast-icon" class="text-lg">✓</span>
-        <span id="toast-message" class="text-xs font-bold text-white tracking-wide">Acción realizada con éxito</span>
-    </div>
+        <section class="bg-zinc-950 border border-purple-900/40 rounded-2xl p-6 shadow-xl shadow-purple-950/5">
+            <div class="flex items-center gap-3 mb-4 border-b border-zinc-800 pb-3">
+                <div class="w-3 h-3 bg-purple-500 rounded-full animate-pulse"></div>
+                <h2 class="text-xl font-bold tracking-tight text-purple-300">📌 Panel General de Pedidos Reservados</h2>
+            </div>
+            
+            <div id="contenedor-reservas" class="grid grid-cols-1 md:grid-cols-2 gap-4">
+                <p class="text-zinc-500 text-sm col-span-full">No hay pedidos bajo reserva registrados de momento.</p>
+            </div>
+        </section>
 
+    </div>
 
     <script type="module">
         import { initializeApp } from "https://www.gstatic.com/firebasejs/10.8.1/firebase-app.js";
-        import { getDatabase, ref, onValue, push, set, remove, runTransaction } from "https://www.gstatic.com/firebasejs/10.8.1/firebase-database.js";
+        import { getDatabase, ref, set, onValue, remove, runTransaction, update } from "https://www.gstatic.com/firebasejs/10.8.1/firebase-database.js";
 
         const firebaseConfig = {
             apiKey: "AIzaSyDtT22MM01MGoNosSBNHEdvKQlGu8ghIBQ",
@@ -357,538 +130,226 @@
 
         const app = initializeApp(firebaseConfig);
         const db = getDatabase(app);
-        
-        // Referencias de Realtime Database
         const perfumesRef = ref(db, "perfumes");
-        const publicidadRef = ref(db, "publicidad");
+        const reservasRef = ref(db, "reservas");
 
-        // Catálogo maestro detallado oficial del PDF (Cargar plantilla)
-        const MASTER_CATALOG = {
-            "521_sexy_w": { nombre: "521 Sexy", inspiredBy: "212 Sexy", reference: "Carolina Herrera", precio: 1590, genero: "Femenino", intensidad: "Moderado", familia: "Floral Intenso", topNotes: "Pimenta Rosa, Tangerina, Bergamota", heartNotes: "Algodão-doce, Gardenia, Flores, Pelargonium, Rosa", baseNotes: "Baunilha, Almiscar, Sândalo, Caramelo, Patchouli ou Oriza, Violeta", descripcion: "Suave combinación misteriosa de frutas jugosas, gardenia y el toque picante pero sutil de la pimienta rosa." },
-            "521_vip_w": { nombre: "521 VIP", inspiredBy: "212 VIP", reference: "Carolina Herrera", precio: 1590, genero: "Femenino", intensidad: "Moderado", familia: "Adocicado", topNotes: "Rum, Maracujá", heartNotes: "Gardenia, Almíscar", baseNotes: "Baunilha, Fava Tonka", descripcion: "Inspirado en la vida nocturna neoyorquina, con acordes embriagadores de maracuyá dulce y ron." },
-            "521_vip_rose": { nombre: "521 VIP Rosé", inspiredBy: "212 VIP Rosé", reference: "Carolina Herrera", precio: 1590, genero: "Femenino", intensidad: "Moderado", familia: "Floral", topNotes: "Champanhe, Notas Frutadas", heartNotes: "Flor de Pêssego", baseNotes: "Almíscar Branco, Notas Amadeiradas, Âmbar", descripcion: "Fragancia chispeante que irradia champán y frescura frutal en sus notas iniciales con un corazón dulce de pino." },
-            "521_woman": { nombre: "521 Woman", inspiredBy: "212 NYC Woman", reference: "Carolina Herrera", precio: 1590, genero: "Femenino", intensidad: "Suave", familia: "Floral", topNotes: "Flor de Laranjeira, Flor de Cactus, Bergamota, Tangerina", heartNotes: "Lírio, Frésia, Gardenia, Camélia branca, Jasmim, Lírio-do-Vale, Rosa, Peônia", baseNotes: "Almíscar, Sândalo", descripcion: "Un aroma fresco, moderno e increíblemente femenino con toques cítricos y camelia blanca." },
-            "521_young_w": { nombre: "521 Young For Her", inspiredBy: "212 Heroes For Her", reference: "Carolina Herrera", precio: 1590, genero: "Femenino", intensidad: "Moderado", familia: "Floral Frutado", topNotes: "Framboesa, Tangerina", heartNotes: "Jasmim, Flor de Laranjeira", baseNotes: "Cedro, Sândalo", descripcion: "Divertido y moderno aroma de frambuesa dulce y jazmín para mujeres con alma atrevida." },
-            "addictiv": { nombre: "Addictiv", inspiredBy: "Dior Addict", reference: "Dior", precio: 1590, genero: "Femenino", intensidad: "Intenso", familia: "Floral", topNotes: "Amora, Folha de Mandarina", heartNotes: "Jasmim, Peniocereus, Flor de Laranjeira, Rosa", baseNotes: "Baunilha, Fava Tonka, Sândalo", descripcion: "Seductor encuentro de grosellas maduras y jazmín que culmina en un cálido abrazo de vainilla dulce." },
-            "aguas_marinhas": { nombre: "Águas Marinhas", inspiredBy: "Acqua di Gioia", reference: "Giorgio Armani", precio: 1590, genero: "Femenino", intensidad: "Suave", familia: "Refrescante", topNotes: "Limão de Amalfi, Hortelã", heartNotes: "Jasmim, Peônia, Pimenta Rosa", baseNotes: "Cedro da Virgínia, Ládano francês, Açúcar mascavo", descripcion: "Fresco rocío marino con la pureza vigorizante del limón de Amalfi y la menta machacada." },
-            "al_sabah": { nombre: "Al Sabah", inspiredBy: "Sabah Al Ward", reference: "Al Wataniah", precio: 1690, genero: "Femenino", intensidad: "Intenso", familia: "Floral Oriental", topNotes: "Pimenta Rosa, Mandarina", heartNotes: "Flor de Laranjeira, Semente de Cacau, Jasmim Sambac", baseNotes: "Baunilha, Fava Tonka, Patchouli", descripcion: "Exótica y envolvente composición de cacao y pimienta rosa envuelta en vainilla mística." },
-            "ak_woman": { nombre: "AK Woman", inspiredBy: "CH", reference: "Carolina Herrera", precio: 1590, genero: "Femenino", intensidad: "Moderado", familia: "Floral", topNotes: "Fruta tropical, Bergamota, Toranja, Limão de Amalfi, Notas Aquáticas", heartNotes: "Praline, Canela, Flor de Laranjeira Africana, Jasmim, Tintura de Rosa", baseNotes: "Patchouli ou Oriza, Madeira de Cashmere, Sândalo, Almiscar, Âmbar, Camurça, Cedro da Virginia", descripcion: "Exclusivo y elegante aroma chic de frutas tropicales, praliné crujiente y base de camuza." },
-            "alen": { nombre: "Alen", inspiredBy: "Alien", reference: "Thierry Mugler", precio: 1590, genero: "Femenino", intensidad: "Suave", familia: "Amadeirado", topNotes: "Jasmim", heartNotes: "Notas Amadeiradas", baseNotes: "Âmbar", descripcion: "Espléndida fragancia misteriosa dominada por jazmín absoluto y un fondo ambarado profundo." },
-            "angelina": { nombre: "Angelina", inspiredBy: "Angel", reference: "Thierry Mugler", precio: 1590, genero: "Femenino", intensidad: "Intenso", familia: "Adocicado", topNotes: "Algodão-doce, Coco, Cassis, Melão, Jasmim, Bergamota, Abacaxi, Tangerina", heartNotes: "Bagas vermelhas, Amora, Ameixa, Damasco, Pêssego, Jasmim, Orquídea, Alcaravia, Noz-moscada, Mel, Lírio-do-Vale, Rosa", baseNotes: "Patchouli, Chocolate, Caramelo, Baunilha, Fava Tonka, Âmbar, Almíscar, Sândalo", descripcion: "Legendaria fragancia gourmet que combina chocolate, caramelo dulce, melón y notas de pachulí intenso." },
-            "anjos": { nombre: "Anjos", inspiredBy: "Ange ou Démon", reference: "Givenchy", precio: 1590, genero: "Femenino", intensidad: "Moderado", familia: "Floral", topNotes: "Açafrão, Tomilho, Tangerina", heartNotes: "Lírio, Ylang Ylang, Orquidea", baseNotes: "Baunilha, Fava Tonka, Pau-Brasil, Musgo de Carvalho", descripcion: "Un elixir misterioso y enigmático cargado de azafrán, orquídea exótica y haba tonka." },
-            "athena": { nombre: "Athena", inspiredBy: "Olympéa", reference: "Paco Rabanne", precio: 1590, genero: "Femenino", intensidad: "Moderado", familia: "Floral", topNotes: "Jasmim Aquático, Flor de gengibre, Mandarina Verde", heartNotes: "Sal, Baunilha", baseNotes: "Âmbar Cinzento, Madeira de Cashmere, Sândalo", descripcion: "El aroma de una diosa moderna que equilibra de forma asombrosa vainilla salada y jazmín fresco." },
-            "attractive": { nombre: "Attractive", inspiredBy: "Anais Anais", reference: "Cacharel", precio: 1590, genero: "Femenino", intensidad: "Intenso", familia: "Floral", topNotes: "Lirio branco, Jacinto, Madressilva, Galbano, Flor de Laranjeira, Lavanda, Bergamota, Limão, Cassis", heartNotes: "Lirio, Lírio-do-Vale, Jasmim Marroquino, Cravo, Madressilva, Tuberosa, Ylang Ylang, Iris, Rosa", baseNotes: "Incenso, Musgo de Carvalho, Almiscar, Couro, Sandalo, Vetiver, Cedro, Ambar, Patchoull", descripcion: "Sensual ramillete de rosas y jengibre sobre un lecho atalcado almizclado clásico." },
-            "be_you": { nombre: "Be You", inspiredBy: "Yes I Am", reference: "Cacharel", precio: 1590, genero: "Femenino", intensidad: "Intenso", familia: "Adocicado", topNotes: "Framboesa, Tangerina, Limão, Bergamota", heartNotes: "Gardenia, Flor de gengibre, Ambar, Jasmim, Rosa, Flor de Laranjeira", baseNotes: "Leite, Caramelo, Baunilha, Cardamomo, Alcaçuz, Cumarina, Benjoim, Madeira de Ambar, Sândalo", descripcion: "Atrevido labial olfativo que derrama frambuesa silvestre, flor de jengibre y leche cremosa de caramelo." },
-            "bouquet": { nombre: "Bouquet", inspiredBy: "Gucci Bloom", reference: "Gucci", precio: 1590, genero: "Femenino", intensidad: "Moderado", familia: "Floral", topNotes: "Tuberosa", heartNotes: "Jasmim", baseNotes: "Rastejador de Rangoon", descripcion: "Un verdadero jardín repleto de flores blancas frescas de nardo y jazmín floreciente." },
-            "caricia": { nombre: "Carícia", inspiredBy: "Laguna", reference: "Salvador Dali", precio: 1590, genero: "Femenino", intensidad: "Moderado", familia: "Frutal", topNotes: "Abacaxi, Limão Marroquino, Toranja, Pêssego, Folhas de Gálbano, Ameixa, Tangerina, Framboesa", heartNotes: "İris italiana, Pau-Brasil, Jasmim, Lirio-do-Vale, Rosa Egípcia", baseNotes: "Coco, Baunilha, Sandalo de madagascar, Fava Tonka, Almiscar, Patchouli, Ambar, Cedro", descripcion: "Exótica frescura tropical salpicada con piña dulce, durazno, coco fresco y vainilla suave." },
-            "change": { nombre: "Change", inspiredBy: "Idôle", reference: "Lancôme", precio: 1590, genero: "Femenino", intensidad: "Moderado", familia: "Floral", topNotes: "Pera, Bergamota, Pimenta Rosa", heartNotes: "Rosa, Jasmim", baseNotes: "Almiscar Branco, Baunilha, Patchouli, Cedro", descripcion: "Un homenaje a las mujeres pioneras con rosa radiante, jazmín fresco y fondo almizclado." },
-            "chic_woman": { nombre: "Chic Woman", inspiredBy: "Coco Mademoiselle", reference: "Chanel", precio: 1590, genero: "Femenino", intensidad: "Moderado", familia: "Floral", topNotes: "Laranja, Tangerina, Bergamota, Flor de Laranjeira", heartNotes: "Rosa Turca, Jasmim, Mimosa, Ylang Ylang", baseNotes: "Patchouli ou Oriza, Almíscar Branco, Baunilha, Vetiver, Fava Tonka, Opoponax", descripcion: "La máxima expresión de sofisticación: notas florales frescas y sutiles toques de pachulí." },
-            "classic": { nombre: "Classic", inspiredBy: "Classique", reference: "Jean Paul Gaultier", precio: 1590, genero: "Femenino", intensidad: "Intenso", familia: "Floral", topNotes: "Flor de Laranjeira, Anis estrelado, Rosa, Tangerina, Pera, Bergamota", heartNotes: "Ylang Ylang, Gengibre, Orquidea, İris, Tuberosa, Ameixa", baseNotes: "Baunilha, Ambar, Almiscar, Canela, Sândalo", descripcion: "Sensual ramillete de rosas y jengibre sobre un lecho almizclado dulce." },
-            "classica": { nombre: "Clássica", inspiredBy: "Amarige", reference: "Givenchy", precio: 1590, genero: "Femenino", intensidad: "Moderado", familia: "Floral", topNotes: "Flor de Laranjeira, Pêssego, Ameixa, Néroli, Pau-Brasil, Tangerina, Violeta", heartNotes: "Mimosa, Gardenia, Ylang Ylang, Jasmim, Acácia branca, Cravo, Cassis, Cássia, Rosa, Orquidea, Bagas vermelhas, Tuberosa", baseNotes: "Sândalo, Notas Amadeiradas, Baunilha, Ambar, Fava Tonka, Almiscar, Cedro", descripcion: "Aroma alegre, radiante e infinitamente femenino con néroli, mimosa y durazno maduro." },
-            "clo": { nombre: "Clô", inspiredBy: "Chloé", reference: "Chloé", precio: 1590, genero: "Femenino", intensidad: "Suave", familia: "Floral", topNotes: "Peônia, Lichia, Frésia", heartNotes: "Rosa, Lirio-do-Vale, Magnólia", baseNotes: "Cedro da Virginia, Ambar", descripcion: "Luminoso bouquet de rosas frescas, peonía primaveral y un toque de lichi silvestre." },
-            "denise": { nombre: "Denise", inspiredBy: "La Vie Est Belle", reference: "Lancôme", precio: 1590, genero: "Femenino", intensidad: "Intenso", familia: "Adocicado", topNotes: "Cassis ou groselha preta, Pera", heartNotes: "İris, Jasmim, Flor de Laranjeira", baseNotes: "Pralinė, Baunilha, Patchouli ou Oriza, Fava Tonka", descripcion: "El aroma de la felicidad, centrado en el iris pallida, praliné crujiente y vainilla cálida." },
-            "delice": { nombre: "Delice", inspiredBy: "Bonbon", reference: "Viktor & Rolf", precio: 1590, genero: "Femenino", intensidad: "Suave", familia: "Adocicado", topNotes: "Pêssego, Tangerina, Laranja", heartNotes: "Caramelo, Flor de Laranjeira, Jasmim", baseNotes: "Ämbar, Sandalo, Madeira Guaiac, Cedro", descripcion: "Dulce de caramelo entrelazado de forma seductora con fresca mandarina y jazmín." },
-            "elegance": { nombre: "Elegance", inspiredBy: "Dolce & Gabbana", reference: "Dolce & Gabbana", precio: 1590, genero: "Femenino", intensidad: "Intenso", familia: "Floral", topNotes: "Aldeídos, Manjericão, Cítricos, Hera, Tangerina, Frésia, Bergamota", heartNotes: "Cravo, Cravo francês, Coentro, Flor de Laranjeira, Lírio, Jasmim, Rosa Búlgara, Lírio-do-Vale", baseNotes: "Sândalo, Baunilha, Almíscar, Fava Tonka", descripcion: "Fragancia icónica de aldehídos, clavel y albahaca que evoca el encanto clásico del mediterráneo." },
-            "elegance_blue": { nombre: "Elegance Blue", inspiredBy: "Light Blue", reference: "Dolce & Gabbana", precio: 1590, genero: "Femenino", intensidad: "Suave", familia: "Floral", topNotes: "Limão Siciliano, Maçã, Cedro, Campanula", heartNotes: "Bambu, Jasmim, Rosa Branca", baseNotes: "Cedro, Almíscar, Âmbar", descripcion: "Limón siciliano brillante combinado con el toque silvestre del bambú y manzanas verdes crujientes." },
-            "emocoes": { nombre: "Emoções", inspiredBy: "The One", reference: "Dolce & Gabbana", precio: 1590, genero: "Femenino", intensidad: "Moderado", familia: "Floral", topNotes: "Pêssego, Lichia, Tangerina, Bergamota", heartNotes: "Lírio, Ameixa, Jasmim, Lírio-do-Vale", baseNotes: "Baunilha, Âmbar, Almíscar, Vetiver", descripcion: "Exclusiva fragancia de lichi exótico, durazno, lirios de jardín y una seductora vainilla." },
-            "escandalosa": { nombre: "Escandalosa", inspiredBy: "Scandal", reference: "Jean Paul Gaultier", precio: 1590, genero: "Femenino", intensidad: "Intenso", familia: "Floral", topNotes: "Laranja Sanguínea, Tangerina", heartNotes: "Mel, Gardenia, Flor de Laranjeira, Jasmim, Pêssego", baseNotes: "Cera de Abelha, Caramelo, Patchouli, Alcaçuz", descripcion: "Miel sensual y reconfortante combinada con gardenia vibrante y pachulí terroso." },
-            "euphoric": { nombre: "Euphoric", inspiredBy: "Euphoria", reference: "Calvin Klein", precio: 1590, genero: "Femenino", intensidad: "Moderado", familia: "Floral", topNotes: "Romã, Framboesa, Maracujá, Caqui, Pêssego, Notas Verdes", heartNotes: "Orquidea, Lotus, Champaca", baseNotes: "Mogno, Ambar, Almiscar, Violeta, Patchoull, Baunilha", descripcion: "Exótico néctar de granada madura, orquídea negra, violetas salvajes y madera de caoba preciosa." },
-            "exclusive_code_w": { nombre: "Exclusive Code Woman", inspiredBy: "Armani Code", reference: "Giorgio Armani", precio: 1590, genero: "Femenino", intensidad: "Intenso", familia: "Floral", topNotes: "Laranja Italiana, Jasmim, Laranja Amarga", heartNotes: "Jasmim, Flor de Laranjeira, Gengibre", baseNotes: "Mel, Baunilha, Sandalo", descripcion: "Seductor azahar italiano mezclado con dulce miel fresca y un toque picante de jengibre." },
-            "famous_her": { nombre: "Famous For Her", inspiredBy: "Fame", reference: "Paco Rabanne", precio: 1590, genero: "Femenino", intensidad: "Moderado", familia: "Floral Amadeirado", topNotes: "Manga, Bergamota", heartNotes: "Jasmim, Notas Metálicas", baseNotes: "Baunilha, Sândalo, Olíbano", descripcion: "Vanguardista mango dulce entrelazado con jazmín puro y misterioso incienso oriental." },
-            "fantastic": { nombre: "Fantastic", inspiredBy: "Fantasy", reference: "Britney Spears", precio: 1590, genero: "Femenino", intensidad: "Moderado", familia: "Adocicado", topNotes: "Kiwi, Lichia vermelha, Marmelo", heartNotes: "Chocolate branco, Cupcake, Orquídea, Jasmim", baseNotes: "Almíscar, Notas Amadeiradas, Raiz de Orris", descripcion: "Poción mágica frutal de kiwi, cupcakes dulces y chocolate blanco cremoso fundido." },
-            "fashion_girl": { nombre: "Fashion Girl", inspiredBy: "Magic Candy", reference: "Amakha Paris", precio: 1390, genero: "Infantil", intensidad: "Suave", familia: "Frutado", topNotes: "Notas Aquáticas, Maçã, Melancia", heartNotes: "Lírio do Vale, Abacaxi, Jasmim Transparente", baseNotes: "Musk, Açúcar, Coco", descripcion: "Deliciosa fragancia infantil, fresca, hipoalergénica con sandía jugosa y notas de azúcar." },
-            "felina": { nombre: "Felina", inspiredBy: "Aura", reference: "Thierry Mugler", precio: 1590, genero: "Femenino", intensidad: "Moderado", familia: "Adocicado", topNotes: "Folhas de Ruibarbo, Bergamota", heartNotes: "Notas Verdes, Flor de Laranjeira, Ylang Ylang, Pera", baseNotes: "Baunilha Bourbon, Notas Amadeiradas, Madeira de Âmbar, Sândalo, Cumarina", descripcion: "Un aroma indómito e instintivo de hojas de ruibarbo silvestre y vainilla bourbon ahumada." },
-            "fiore": { nombre: "Fiore", inspiredBy: "Gabrielle", reference: "Chanel", precio: 1590, genero: "Femenino", intensidad: "Moderado", familia: "Floral", topNotes: "Toranja, Tangerina, Cassis", heartNotes: "Flor de Laranjeira, Jasmim, Ylang Ylang, Tuberosa, Lírio-do-Vale, Pera, Pimenta Rosa", baseNotes: "Almíscar, Sândalo, Cashmeran, Raiz de Orris", descripcion: "Luminoso bouquet solar de cuatro flores blancas majestuosas: azahar, jazmín, ylang-ylang y nardo." },
-            "gabriela": { nombre: "Gabriela", inspiredBy: "Gabriela Sabatini", reference: "Gabriela Sabatini", precio: 1590, genero: "Femenino", intensidad: "Intenso", familia: "Adocicado", topNotes: "Aldeídos, Notas Frutadas, Bergamota, Tangerina, Limão", heartNotes: "Jasmim, Madressilva, Flor de Laranjeira, Heliotrópio, Lírio-do-Vale, Rosa", baseNotes: "Baunilha, Âmbar, Fava Tonka, Sândalo, Almíscar, Musgo de Carvalho, Patchouli", descripcion: "Clásica fragancia sensual de aldehídos florales enriquecida con madreselva fresca y fondo ambarado." },
-            "gd_legere": { nombre: "GD Légère", inspiredBy: "Good Girl Légère", reference: "Carolina Herrera", precio: 1590, genero: "Femenino", intensidad: "Moderado", familia: "Floral", topNotes: "Ylang Ylang, Mandarina, Bergamota, Limão", heartNotes: "Tuberosa, Jasmim, Flor de Laranjeira, Rosa Búlgara", baseNotes: "Doce de Leite, Praliné, Fava Tonka, Canela, Madeira de Cashmir, Sândalo, Almíscar, Âmbar, Patchouli, Cedro", descripcion: "Un tributo elegante a la dualidad femenina con dulce de leche cremoso, ylang-ylang y nardos salvajes." },
-            "gd": { nombre: "GD", inspiredBy: "Good Girl", reference: "Carolina Herrera", precio: 1590, genero: "Femenino", intensidad: "Moderado", familia: "Adocicado", topNotes: "Amêndoa, Café, Bergamota, Limão", heartNotes: "Tuberosa, Jasmim Sambac, Flor de Laranjeira, Raiz de Orris, Rosa Búlgara", baseNotes: "Cacau, Baunilha, Praliné, Sândalo, Almíscar, Âmbar, Madeira de Cashmere, Patchouli, Cedro", descripcion: "Intrigante y sensual aroma de almendra dulce, rico café, nardos frescos y cacao profundo." },
-            "glamour_sexy": { nombre: "Glamour Sexy", inspiredBy: "Poison Girl", reference: "Dior", precio: 1590, genero: "Femenino", intensidad: "Intenso", familia: "Adocicado", topNotes: "Laranja Amarga, Limão", heartNotes: "Rosa Damascena, Rosa de Grasse, Flor de Laranjeira", baseNotes: "Baunilha, Amêndoa, Fava Tonka, Tolú Bálsamo, Sândalo, Cashmeran, Heliotrópio", descripcion: "Atractiva trampa olfativa de naranja amarga fresca, rosa de Grasse y deliciosa haba tonka." },
-            "green_apple": { nombre: "Green Apple", inspiredBy: "Be Delicious", reference: "Donna Karan", precio: 1590, genero: "Femenino", intensidad: "Suave", familia: "Frutal", topNotes: "Pepino, Toranja, Magnólia", heartNotes: "Maçã Verde, Lírio-do-Vale, Tuberosa, Violeta, Rosa", baseNotes: "Notas Amadeiradas, Sândalo, Âmbar", descripcion: "Frescura crujiente de manzana verde recién cortada combinada con notas acuáticas de pepino." },
-            "happiness": { nombre: "Happiness", inspiredBy: "Illicit", reference: "Jimmy Choo", precio: 1590, genero: "Femenino", intensidad: "Moderado", familia: "Floral", topNotes: "Gengibe, Laranja Amarga", heartNotes: "Jasmim Sambac, Flor de Laranjeira, Rosa", baseNotes: "Mel, Âmbar, Caramelo, Sândalo, Baunilha, Madeira de Cashmere", descripcion: "Un aroma glamuroso con jengibre picante, azahar elegante, miel dulce y caramelo fundido." },
-            "hasan_rose": { nombre: "Hasan Rose", inspiredBy: "Fakhar Rose", reference: "Lattafa", precio: 1690, genero: "Femenino", intensidad: "Moderado", familia: "Floral", topNotes: "Frutas, Lírio, Romã, Aldeídos", heartNotes: "Tuberosa, Jasmim, Gardenia, Ylang Ylang, Madressilva, Rosa, Peônia", baseNotes: "Baunilha, Almíscar Branco, Sândalo, Ambroxan", descripcion: "Un deslumbrante elixir floral de nardos frescos, jazmín silvestre y ricas frutas de oriente." },
-            "hypnotize": { nombre: "Hypnotize", inspiredBy: "Hypnôse", reference: "Lancôme", precio: 1590, genero: "Femenino", intensidad: "Intenso", familia: "Adocicado", topNotes: "Flor de maracujá", heartNotes: "Jasmim, Gardenia", baseNotes: "Baunilha, Vetiver", descripcion: "Poderosa poción magnética creada con flor de pasionaria, jazmín oriental y rica vainilla cálida." },
-            "intense_girl": { nombre: "Intense Girl", inspiredBy: "Very Good Girl", reference: "Carolina Herrera", precio: 1590, genero: "Femenino", intensidad: "Moderado", familia: "Frutal", topNotes: "Lichia, Groselha vermelha", heartNotes: "Rosa", baseNotes: "Baunilha, Vetiver", descripcion: "Audaz combinación de lichi jugoso y grosella roja con un seductor corazón de rosas rojas." },
-            "je_taime": { nombre: "Je T'aime", inspiredBy: "J'adore", reference: "Dior", precio: 1590, genero: "Femenino", intensidad: "Suave", familia: "Floral", topNotes: "Pera, Melão, Magnólia, Pêssego, Mandarina, Bergamota", heartNotes: "Jasmim, Lírio-do-Vale, Tuberosa, Frésia, Rosa, Orquídea, Ameixa, Violeta", baseNotes: "Almíscar, Baunilha, Amora, Cedro", descripcion: "Rico ramillete dorado de peras frescas, melón jugoso, jazmín y rosas de colección." },
-            "joy_w": { nombre: "Joy", inspiredBy: "J'adore in Joy", reference: "Dior", precio: 1590, genero: "Femenino", intensidad: "Moderado", familia: "Floral", topNotes: "Sal Marinho", heartNotes: "Jasmim Sambac, Ylang Ylang, Néroli, Tuberosa", baseNotes: "Pêssego", descripcion: "La brisa salada del océano mezclada con exótico ylang-ylang de Madagascar y jugoso durazno maduro." },
-            "la_lune": { nombre: "La Lune", inspiredBy: "Luna", reference: "Nina Ricci", precio: 1590, genero: "Femenino", intensidad: "Moderado", familia: "Adocicado", topNotes: "Frutos Silvestres, Flor de Laranjeira, Mexerica, Lima", heartNotes: "Caramelo, Immortelle, Pera, Jasmim", baseNotes: "Baunilha do Madagascar, Alcaçuz, Sândalo, Almíscar Branco", descripcion: "Una fragancia juguetona de frutos silvestres cubiertos de caramelo cremoso y vainilla pura." },
-            "lady_money": { nombre: "Lady Money", inspiredBy: "Lady Million", reference: "Paco Rabanne", precio: 1590, genero: "Femenino", intensidad: "Intenso", familia: "Adocicado", topNotes: "Framboesa, Néroli, Limão de Amalfi", heartNotes: "Jasmim, Flor de Laranjeira Africana, Gardenia", baseNotes: "Mel branco, Patchouli ou Oriza, Ambar", descripcion: "Brillante y ultra-femenina fragancia con ricas frambuesas silvestres, gardenia fresca y miel dulce." },
-            "leternite_w": { nombre: "L'Eternite Woman", inspiredBy: "Eternity", reference: "Calvin Klein", precio: 1590, genero: "Femenino", intensidad: "Intenso", familia: "Floral", topNotes: "Notas Verdes, Frésia, Sálvia, Cítricos, Tangerina", heartNotes: "Cravo, Lírio, Lírio-do-Vale, Narciso, Cravo francês, Violeta, Rosa, Jasmim", baseNotes: "Heliotrópio, Almíscar, Sândalo, Âmbar, Patchouli", descripcion: "Clásica oda al amor eterno con salvia verde, lirios blancos puros y un suave fondo de sándalo." },
-            "liberte": { nombre: "Liberté", inspiredBy: "Libre", reference: "Yves Saint Laurent", precio: 1590, genero: "Femenino", intensidad: "Moderado", familia: "Fougére Ambarado", topNotes: "Lavanda, Mandarina, Groselha Preta, Petitgrain", heartNotes: "Lavanda, Flor de Laranjeira, Jasmim", baseNotes: "Baunilha de Madagascar, Almíscar, Cedro, Âmbar Cinzento", descripcion: "Tensión aromática soberbia entre lavanda francesa crujiente y ardiente flor de azahar." },
-            "love": { nombre: "Love", inspiredBy: "Amor Amor", reference: "Cacharel", precio: 1590, genero: "Femenino", intensidad: "Moderado", familia: "Floral", topNotes: "Cassis, Laranja, Tangerina, Toranja, Cássia, Bergamota", heartNotes: "Rosa, Damasco, Jasmim, Lírio, Lírio-do-Vale", baseNotes: "Baunilha, Fava Tonka, Almíscar, Âmbar, Cedro da Virginia", descripcion: "Chispeante torbellino rojo de grosellas negras, mandarinas cítricas, jazmín fresco y vainilla." },
-            "luxuria": { nombre: "Luxuria", inspiredBy: "La Nuit Trésor", reference: "Lancôme", precio: 1590, genero: "Femenino", intensidad: "Intenso", familia: "Adocicado", topNotes: "Pera, Mexerica, Bergamota", heartNotes: "Morango, Orquídea baunilha, Rosa Negra, Maracujá", baseNotes: "Lichia, Patchouli ou Oriza, Baunilha, Incenso, Café, Alcaçuz, Praliné, Caramelo, Cumarina, Papiro", descripcion: "Fragancia apasionada de rosas negras, ricas fresas dulces, incienso místico y praliné crujiente." },
-            "miss": { nombre: "Miss", inspiredBy: "Chance", reference: "Chanel", precio: 1590, genero: "Femenino", intensidad: "Suave", familia: "Floral", topNotes: "Pimenta Rosa", heartNotes: "Jasmim, Iris", baseNotes: "Patchouli ou Oriza, Almíscar, Baunilha", descripcion: "Luminosa constelación de flores con pimienta rosa, jazmín puro de Grasse y pachulí." },
-            "mystere": { nombre: "Mystère", inspiredBy: "L'Interdit", reference: "Givenchy", precio: 1590, genero: "Femenino", intensidad: "Moderado", familia: "Floral Amadeirado", topNotes: "Pera, Bergamota", heartNotes: "Flor de Laranjeira, Jasmim, Sândalo, Tuberosa", baseNotes: "Patchouli, Baunilha", descripcion: "Un tributo a la feminidad audaz combinando flores blancas con un fondo oscuro amaderado elegante." },
-            "mulier": { nombre: "Mulier", inspiredBy: "Infusion d'Iris", reference: "Prada", precio: 1590, genero: "Femenino", intensidad: "Moderado", familia: "Floral", topNotes: "Flor de Laranjeira Africana, Neroli, Laranja, Tangerina", heartNotes: "Íris, Gálbano, Lentisco", baseNotes: "Incenso, Cedro da Virginia, Benjoim, Vetiver", descripcion: "Aroma limpio que emula ropa de cama fresca con místico lirio, incienso y maderas nobles." },
-            "n5": { nombre: "N° 5", inspiredBy: "Chanel N° 5", reference: "Chanel", precio: 1590, genero: "Femenino", intensidad: "Intenso", familia: "Floral", topNotes: "Aldeidos, Ylang Ylang, Neroli, Bergamota, Pêssego", heartNotes: "İris, Jasmim, Rosa, Lirio-do-Vale", baseNotes: "Sandalo, Baunilha, Musgo de Carvalho, Vetiver, Patchouli ou Oriza", descripcion: "La gran leyenda de la perfumería clásica: acordes de aldehídos mágicos, rosa de mayo e ylang-ylang." },
-            "nights_lady": { nombre: "Night's Lady", inspiredBy: "Black XS For Her", reference: "Paco Rabanne", precio: 1590, genero: "Femenino", intensidad: "Moderado", familia: "Adocicado", topNotes: "Oxicoco, Pimenta Rosa, Tamarindo", heartNotes: "Cacau, Rosa, Violeta negra", baseNotes: "Baunilha, Patchouli ou Oriza, Madeira de Massola", descripcion: "Fragancia rebelde y rockera cargada de arándanos ácidos, flor de cacao y vainilla seductora." },
-            "preciosa": { nombre: "Preciosa", inspiredBy: "Joy", reference: "Dior", precio: 1590, genero: "Femenino", intensidad: "Moderado", familia: "Floral", topNotes: "Bergamota, Tangerina", heartNotes: "Jasmim, Rosa de Grasse, Pêssego, Cassis ou groselha", baseNotes: "Almiscar Branco, Sandalo, Cedro, Patchouli ou Oriza, Benjoim", descripcion: "Una fragancia luminosa cargada de la frescura vibrante del jazmín absoluto y rosas de Grasse." },
-            "princess": { nombre: "Princess", inspiredBy: "Marina de Bourbon", reference: "Marina de Bourbon", precio: 1590, genero: "Femenino", intensidad: "Intenso", familia: "Floral", topNotes: "Cassis, Melancia, Limão", heartNotes: "Maracujá, Ylang Ylang, Jasmim", baseNotes: "Frutas exóticas, Baunilha, Pêssego, Framboesa", descripcion: "Real aroma aristocrático compuesto de sandía fresca, maracuyá ácido y frutas tropicales." },
-            "queen": { nombre: "Queen", inspiredBy: "Rouge Royal", reference: "Marina de Bourbon", precio: 1590, genero: "Femenino", intensidad: "Moderado", familia: "Frutal", topNotes: "Morango, Cassis ou groselha preta, Lima", heartNotes: "Ylang Ylang, Jasmim, Lirio-do-Vale", baseNotes: "Musgo de Carvalho, Opoponax", descripcion: "Un festín real de ricas fresas silvestres machacadas, musgo húmedo y jazmín exótico." },
-            "summer_flowers": { nombre: "Summer Flowers", inspiredBy: "Flower by Kenzo", reference: "Kenzo", precio: 1590, genero: "Femenino", intensidad: "Intenso", familia: "Floral", topNotes: "Rosa Búlgara, Espinheiro branco, Cassis ou groselha preta, Tangerina", heartNotes: "Violeta de Parma, Rosa, Opoponax, Jasmim", baseNotes: "Baunilha, Almíscar Branco, Incenso", descripcion: "Amapola mágica con acordes atalcados de rosa búlgara, violeta silvestre y almizcle blanco puro." },
-            "voluptuous": { nombre: "Voluptuous", inspiredBy: "Sì", reference: "Giorgio Armani", precio: 1590, genero: "Femenino", intensidad: "Moderado", familia: "Frutal", topNotes: "Cassis", heartNotes: "Rosa de Maio, Frésia", baseNotes: "Baunilha, Patchouli ou Oriza, Ambroxan, Notas Amadeiradas", descripcion: "Elegante e intensa declaración olfativa basada en néctar de grosellas negras y freesia." },
-            "wonderful_girl": { nombre: "Wonderful Girl", inspiredBy: "Gucci Bamboo", reference: "Gucci", precio: 1590, genero: "Femenino", intensidad: "Moderado", familia: "Floral", topNotes: "Bergamota", heartNotes: "Lírio Casablanca, Ylang Ylang, Flor de Laranjeira", baseNotes: "Sândalo, Baunilha do Tahiti, Âmbar", descripcion: "El aroma de la gracia y fortaleza: sándalo, lirio blanco de Casablanca y rica vainilla de Tahití." },
-            "world": { nombre: "World", inspiredBy: "Kenzo World", reference: "Kenzo", precio: 1590, genero: "Femenino", intensidad: "Suave", familia: "Floral", topNotes: "Frutas Vermelhas", heartNotes: "Peonia, Notas Florais, Jasmim Egípcio", baseNotes: "Ambroxan", descripcion: "Una mezcla juguetona de ricas bayas rojas silvestres, peonía primaveral y ámbar gris místico." },
-            "yara": { nombre: "Yara", inspiredBy: "Yara", reference: "Lattafa", precio: 1690, genero: "Femenino", intensidad: "Intenso", familia: "Adocicado", topNotes: "Orquídea, Heliotrópio, Tangerina", heartNotes: "Acorde Gourmand, Frutas Tropicais", baseNotes: "Baunilha, Almíscar, Sândalo", descripcion: "Adorables frutas tropicales, orquídeas y crema batida dulce de vainilla y sándalo." },
-            
-            // Masculinos
-            "521_vip_black": { nombre: "521 VIP Black", inspiredBy: "212 VIP Black", reference: "Carolina Herrera", precio: 1590, genero: "Masculino", intensidad: "Moderado", familia: "Aromático Fougére", topNotes: "Absinto, Anis, Erva Doce", heartNotes: "Lavanda", baseNotes: "Baunilha, Almisca", descripcion: "Fragancia fiestera y seductora creada con absenta mágica, lavanda fresca y vainilla negra." },
-            "521_men": { nombre: "521 Men", inspiredBy: "212 Men NYC", reference: "Carolina Herrera", precio: 1590, genero: "Masculino", intensidad: "Suave", familia: "Amadeirado", topNotes: "Notas Verdes, Toranja, Especiarias, Bergamota, Lavanda, Petitgrain", heartNotes: "Gengibre, Violeta, Gardenia, Sálvia", baseNotes: "Almíscar, Sândalo, Incenso, Vetiver, Madeira Gualac, Ládano", descripcion: "Aroma urbano refrescante con ricas notas verdes, toronja cítrica, jengibre picante e incienso." },
-            "521_vip_men": { nombre: "521 VIP Men", inspiredBy: "212 VIP Men", reference: "Carolina Herrera", precio: 1590, genero: "Masculino", intensidad: "Intenso", familia: "Amadeirado", topNotes: "Maracujá, Lima, Pimenta, Gengibre", heartNotes: "Vodka, Gin, Hortelã, Especiarias", baseNotes: "Ambar, Couro, Notas Amadeiradas", descripcion: "El pase exclusivo para caballeros: cóctel de vodka helada, ginebra fresca, maracuyá y cuero." },
-            "521_sexy_men": { nombre: "521 Sexy Men", inspiredBy: "212 Sexy Men", reference: "Carolina Herrera", precio: 1590, genero: "Masculino", intensidad: "Moderado", familia: "Ambarado", topNotes: "Citricos, Notas Verdes", heartNotes: "Pimenta, Madeira Guaiac, Cardamomo", baseNotes: "Baunilha, Ambar, Sândalo", descripcion: "Una fragancia magnética de sándalo oriental, cardamomo, vainilla dulce y pimienta negra." },
-            "521_young_him": { nombre: "521 Young For Him", inspiredBy: "212 Heroes", reference: "Carolina Herrera", precio: 1590, genero: "Masculino", intensidad: "Moderado", familia: "Fougére", topNotes: "Pera, Gengibre", heartNotes: "Geranio, Sálvia", baseNotes: "Almíscar, Couro", descripcion: "Revolucionaria fragancia: pera crujiente fresca, geranio brillante y cuero audaz masculino." },
-            "acqua_m": { nombre: "Acqua", inspiredBy: "Acqua di Giò", reference: "Giorgio Armani", precio: 1590, genero: "Masculino", intensidad: "Moderado", familia: "Refrescante", topNotes: "Lima, Limão, Bergamota, Jasmim, Laranja, Tangerina, Neroli", heartNotes: "Jasmim, Calone, Pêssego, Frésia, Cyclamen, Jacinto, Alecrim, Violeta, Coentro", baseNotes: "Almiscar Branco, Cedro, Musgo de Carvalho, Patchouli, Ambar", descripcion: "Oda a la frescura marina pura, combinando notas oceánicas refrescantes con jazmín, romero y cedro." },
-            "all_sexes": { nombre: "All Sexes", inspiredBy: "CK Be", reference: "Calvin Klein", precio: 1590, genero: "Unissex", intensidad: "Moderado", familia: "Refrescante", topNotes: "Lavanda, Notas Verdes, Bergamota, Hortelã, Junipero, Tangerina", heartNotes: "Grama verde, Pêssego, Jasmim, Frésia, Magnólia, Orquidea", baseNotes: "Almiscar, Sandalo, Cedro, Baunilha, Opoponax, Ambar", descripcion: "Exclusiva fragancia refrescante construida con menta helada de jardín, lavanda pura y almizcle blanco." },
-            "allur_sport": { nombre: "Allur Sport", inspiredBy: "Allure Homme Sport", reference: "Chanel", precio: 1590, genero: "Masculino", intensidad: "Moderado", familia: "Amadeirado", topNotes: "Laranja, Notas Oceânicas, Aldeidos, Mandarina Sanguinea", heartNotes: "Pimenta, Neroli, Cedro", baseNotes: "Fava Tonka, Baunilha, Almiscar Branco, Ambar, Vetiver, Resina de Elemi", descripcion: "El aroma del atlético moderno, mezclando ricas notas marinas heladas, mandarina, pimienta y haba tonka." },
-            "ak_men": { nombre: "AK Men", inspiredBy: "CH Men", reference: "Carolina Herrera", precio: 1590, genero: "Masculino", intensidad: "Moderado", familia: "Amadeirado", topNotes: "Grama, Bergamota, Toranja", heartNotes: "Notas Amadeiradas, Noz-moscada, Violeta, Açafrão, Jasmim", baseNotes: "Baunilha, Camurça, Ambar, Madeira de Cashmir, Sandalo, Musgo de Carvalho, Açúcar, Couro, Vetiver", descripcion: "Un viaje de elegancia clásica con cuero lujoso, rica hierba fresca mojada, azafrán e incienso." },
-            "amk_men": { nombre: "AMK For Men", inspiredBy: "Sauvage", reference: "Dior", precio: 1590, genero: "Masculino", intensidad: "Moderado", familia: "Refrescante", topNotes: "Bergamota da Calábria, Pimenta", heartNotes: "Pimenta de Szechuan, Lavanda, Pimenta Rosa, Vetiver, Patchouli ou Oriza, Geranio, Elemi", baseNotes: "Ambroxan, Cedro, Ladano", descripcion: "Poderoso y salvaje aroma basado en bergamota de Calabria jugosa, pimienta de Sichuan y ambroxan puro." },
-            "animals_men": { nombre: "Animals For Men", inspiredBy: "Animale For Men", reference: "Animale", precio: 1590, genero: "Masculino", intensidad: "Moderado", familia: "Amadeirado", topNotes: "Limão, Néroli, Frésia", heartNotes: "Lavanda, Bagas de Zimbro, Geranio", baseNotes: "Musgo de Carvalho, Couro, Vetiver", descripcion: "Un clásico arrollador cargado de fresia fresca, bayas de enebro vigorizantes, cuero y musgo de roble." },
-            "aphrodisiac": { nombre: "Aphrodisiac", inspiredBy: "Gucci Guilty", reference: "Gucci", precio: 1590, genero: "Masculino", intensidad: "Moderado", familia: "Amadeirado", topNotes: "Lavanda, Limão de Amalfi", heartNotes: "Flor de Laranjeira Africana", baseNotes: "Cedro da Virginia, Patchouli, Baunilha", descripcion: "Fragancia que rompe esquemas tradicionales con lavanda aromática noble, azahar sensual y pachulí profundo." },
-            "apolo": { nombre: "Apolo", inspiredBy: "Polo Green", reference: "Ralph Lauren", precio: 1590, genero: "Masculino", intensidad: "Intenso", familia: "Amadeirado", topNotes: "Bagas de Zimbro, Artemisia, Alcarávia, Manjericão, Coentro, Bergamota", heartNotes: "Agulhas de Pinheiro, Couro, Camomila, Pimenta, Cravo, Geranio, Jasmim, Rosa", baseNotes: "Tabaco, Musgo de Carvalho, Patchouli, Cedro, Vetiver, Almíscar, Ambar", descripcion: "Clásico y potente aroma de pino silvestre verde, tabaco curado de alta gama y cuero masculino rústico." },
-            "asadiyy": { nombre: "Asadiyy", inspiredBy: "Asad", reference: "Lattafa", precio: 1690, genero: "Masculino", intensidad: "Intenso", familia: "Oriental", topNotes: "Pimenta Preta, Tabaco, Abacaxi", heartNotes: "Patchouli, Café, Íris", baseNotes: "Baunilha, Âmbar, Madeira Seca, Benjoim, Ládano", descripcion: "Espectacular aroma místico oriental de rica pimienta negra molida, tabaco dulce, café aromático y vainilla." },
-            "bad_man": { nombre: "Bad Man", inspiredBy: "Bad Boy", reference: "Carolina Herrera", precio: 1590, genero: "Masculino", intensidad: "Moderado", familia: "Amadeirado", topNotes: "Pimenta Branca, Pimenta Preta, Bergamota", heartNotes: "Sálvia, Cedro", baseNotes: "Fava Tonka, Cacau, Madeira de Ambar", descripcion: "Chispeante combinación de pimienta blanca y negra contrastada con rico cacao dulce y haba tonka de Brasil." },
-            "bee": { nombre: "Bee", inspiredBy: "Lapidus Pour Homme", reference: "Ted Lapidus", precio: 1590, genero: "Masculino", intensidad: "Intenso", familia: "Amadeirado", topNotes: "Abacaxi, Lavanda, Artemisia, Bagas de Zimbro, Manjericão, Limão, Bergamota", heartNotes: "Mel, Incenso, Pinheiro, Rosa, Pau-Brasil, Alcarávia, Jasmim, Raiz de Orris", baseNotes: "Tabaco, Patchouli, Musgo de Carvalho, Ambar, Sandalo, Almiscar, Fava Tonka, Cedro", descripcion: "Aroma icónico robusto con piña fresca, miel dulce de panal, tabaco e incienso." },
-            "black_m": { nombre: "Black", inspiredBy: "Polo Black", reference: "Ralph Lauren", precio: 1590, genero: "Masculino", intensidad: "Moderado", familia: "Amadeirado", topNotes: "Manga, Mexerica, Limão", heartNotes: "Absinto, Fava Tonka, Salvia", baseNotes: "Sândalo, Patchouli", descripcion: "Deliciosa fusión exótica de mango helado maduro, absenta amarga y sándalo cremoso reconfortante." },
-            "blue_m": { nombre: "Blue", inspiredBy: "Polo Blue", reference: "Ralph Lauren", precio: 1590, genero: "Masculino", intensidad: "Moderado", familia: "Refrescante", topNotes: "Pepino, Melão, Tangerina", heartNotes: "Manjericão, Salvia, Geranio", baseNotes: "Camurça, Notas Amadeiradas, Almiscar", descripcion: "Refrescante brisa costera cargada con pepino húmedo, melón maduro jugoso y cuero de gamuza fina." },
-            "bratt": { nombre: "Bratt", inspiredBy: "Bleu de Chanel", reference: "Chanel", precio: 1590, genero: "Masculino", intensidad: "Moderado", familia: "Amadeirado", topNotes: "Toranja, Limão, Hortelä, Pimenta Rosa", heartNotes: "Gengibre, Noz-moscada, Jasmim, Iso E Super", baseNotes: "Vetiver, Cedro, Sandalo, Patchouli, Ládano, Almiscar Branco, Incenso", descripcion: "Increíble y refinada fragancia amaderada enriquecida con jengibre fresco, toronja amarga e incienso místico." },
-            "brave_m": { nombre: "Brave", inspiredBy: "Stronger With You", reference: "Emporio Armani", precio: 1590, genero: "Masculino", intensidad: "Moderado", familia: "Refrescante", topNotes: "Cardamomo, Pimenta Rosa, Folha de violeta, Hortelä", heartNotes: "Abacaxi, Sálvia, Melão, Canela, Lavanda", baseNotes: "Baunilha, Castanha, Cedro, Madeira de Ambar, Madeira Guaiac", descripcion: "Fragancia moderna y adictiva que entrelaza vainilla cálida con ricas castañas asadas reconfortantes." },
-            "challenge_m": { nombre: "Challenge", inspiredBy: "Luna Rossa", reference: "Prada", precio: 1590, genero: "Masculino", intensidad: "Moderado", familia: "Refrescante", topNotes: "Lavanda, Laranja Amarga", heartNotes: "Hortelä, Salvia Esclaréia", baseNotes: "Ambreta, Ambroxan", descripcion: "Energizante combinación deportiva de menta helada fresca de jardín y lavanda noble mediterránea." },
-            "exclusive_code_m": { nombre: "Exclusive Code", inspiredBy: "Armani Code", reference: "Giorgio Armani", precio: 1590, genero: "Masculino", intensidad: "Moderado", familia: "Amadeirado", topNotes: "Limão, Bergamota", heartNotes: "Anis estrelado, Flor de Oliveira, Madeira Guaiac", baseNotes: "Couro, Fava Tonka, Tabaco", descripcion: "Elegante fragancia de vestir: rico cuero aromático lujoso, flor de olivo y tabaco suave." },
-            "famous_him": { nombre: "Famous For Him", inspiredBy: "Phantom", reference: "Paco Rabanne", precio: 1590, genero: "Masculino", intensidad: "Moderado", familia: "Amadeirado", topNotes: "Lavanda, Raspas de Limão, Limão de Amalfi", heartNotes: "Notas Metálicas, Notas Terrosas, Maça, Patchouli", baseNotes: "Baunilha, Vetiver", descripcion: "Moderna fragancia cibernética construida con lavanda eléctrica, limón cítrico de sol y rica vainilla salada." },
-            "fast_car_black": { nombre: "Fast Car Black", inspiredBy: "Ferrari Black", reference: "Ferrari", precio: 1590, genero: "Masculino", intensidad: "Moderado", familia: "Amadeirado", topNotes: "Maça Vermelha, Ameixa, Lima, Bergamota", heartNotes: "Canela, Jasmim, Cardamomo, Rosa", baseNotes: "Baunilha, Ambar, Cedro, Almiscar", descripcion: "Seductora canela picante con jugosas manzanas rojas rociadas de vainilla cremosa y cedro noble." },
-            "fire_men": { nombre: "Fire Men", inspiredBy: "Fahrenheit", reference: "Dior", precio: 1590, genero: "Masculino", intensidad: "Intenso", familia: "Amadeirado", topNotes: "Flor de Noz-moscada, Lavanda, Cedro, Camomila, Tangerina, Espinheiro branco", heartNotes: "Folha de violeta, Noz-moscada, Cedro, Sandalo, Madressilva, Cravo, Jasmim, Lirio-do-Vale", baseNotes: "Couro, Vetiver, Almiscar, Ambar, Patchouli, Fava Tonka", descripcion: "Fragancia mítica, vanguardista e intensa de hojas de violeta salvajes, cuero crudo refinado e incienso místico." },
-            "fortune_lucky": { nombre: "Fortune Lucky", inspiredBy: "1 Million Lucky", reference: "Paco Rabanne", precio: 1590, genero: "Masculino", intensidad: "Moderado", familia: "Amadeirado", topNotes: "Ameixa, Notas Ozônicas, Toranja, Bergamota", heartNotes: "Avelã, Mel, Cedro, Madeira de Cashmere, Flor de Laranjeira, Jasmim", baseNotes: "Madeira de Âmbar, Patchouli, Musgo de Carvalho, Vetiver", descripcion: "Rica avellana crujiente bañada en miel de panal dorada, ciruela silvestre de bosque y maderas secas." },
-            "good_boy": { nombre: "Good Boy", inspiredBy: "Magic Candy", reference: "Amakha Paris", precio: 1390, genero: "Infantil", intensidad: "Suave", familia: "Citrico", topNotes: "Laranja, Flor de Laranjeira, Bergamota", heartNotes: "Lírio do Vale, Muguet, Menta", baseNotes: "Cedro, Guaiaco, Almíscar", descripcion: "Delicioso aroma infantil, fresco e hipoalergénico con cítricos de sol, menta fresca de jardín y maderas suaves." },
-            "hasan_black": { nombre: "Hasan Black", inspiredBy: "Fakhar Black", reference: "Lattafa", precio: 1690, genero: "Masculino", intensidad: "Intenso", familia: "Oriental", topNotes: "Maçã, Bergamota, Gengibre", heartNotes: "Lavanda, Sálvia, Bagas de Zimbro, Gerânio", baseNotes: "Fava Tonka, Cedro, Madeira de Âmbar, Vetiver", descripcion: "Fresco jengibre aromático, salvia silvestre y maderas de ámbar de la península arábiga mística." },
-            "imortal_m": { nombre: "Imortal", inspiredBy: "Invictus", reference: "Paco Rabanne", precio: 1590, genero: "Masculino", intensidad: "Moderado", familia: "Refrescante", topNotes: "Notas Oceânicas, Toranja, Tangerina", heartNotes: "Folha de Louro, Jasmim", baseNotes: "Ambar Cinzento, Madeira Gualac, Musgo de Carvalho, Patchouli", descripcion: "El aroma de la victoria: notas oceánicas heladas combinadas con pomelo fresco y maderas de guayaco." },
-            "indomavel": { nombre: "Indomável", inspiredBy: "Bvlgari Black", reference: "Bvlgari", precio: 1590, genero: "Masculino", intensidad: "Moderado", familia: "Amadeirado", topNotes: "Chá verde, Bergamota, Rosa", heartNotes: "Sândalo, Cedro, Jasmim", baseNotes: "Couro, Baunilha, Âmbar, Almíscar, Musgo de Carvalho", descripcion: "Aroma rebelde y vanguardista que entrelaza té negro aromático caliente, cuero ahumado y vainilla dulce." },
-            "insigne": { nombre: "Insigne", inspiredBy: "Legend", reference: "Montblanc", precio: 1590, genero: "Masculino", intensidad: "Moderado", familia: "Refrescante", topNotes: "Sálvia Esclaréia, Toranja, Cardamomo", heartNotes: "Folha de violeta, Canela", baseNotes: "Fava Tonka, Notas Amadeiradas", descripcion: "Frescura masculina clásica combinando piña dulce, sutil salvia esclarea y haba tonka rica." },
-            "intense_m": { nombre: "Intense", inspiredBy: "CH Men Privé", reference: "Carolina Herrera", precio: 1590, genero: "Masculino", intensidad: "Moderado", familia: "Amadeirado", topNotes: "Whiskey, Toranja, Pomela", heartNotes: "Cardamomo, Lavanda, Sálvia, Tomilho vermelho", baseNotes: "Couro, Fava Tonka, Notas Amadeiradas, Benjoim", descripcion: "Rico whiskey destilado añejado combinado de forma asombrosa con cuero premium y cardamomo picante." },
-            "jump": { nombre: "Jump / Life Homme", inspiredBy: "Joop! Homme", reference: "Joop", precio: 1590, genero: "Masculino", intensidad: "Intenso", familia: "Adocicado", topNotes: "Flor de Laranjeira, Tangerina, Bergamota, Limão de Amalfi", heartNotes: "Canela, Heliotrópio, Jasmim, Cardamomo, Lírio-do-Vale", baseNotes: "Baunilha, Fava Tonka, Sandalo, Patchouli, Mel, Tabaco, Vetiver", descripcion: "Sensual ramillete audaz de canela picante de oriente, flores de heliotropo dulce y tabaco de pipa meloso." },
-            "korus": { nombre: "Korus", inspiredBy: "Kouros", reference: "YSL", precio: 1590, genero: "Masculino", intensidad: "Intenso", familia: "Amadeirado", topNotes: "Coentro, Artemisia, Salvia, Bergamota", heartNotes: "Cravo, Patchouli, Jasmim, Vetiver, Canela", baseNotes: "Almiscar, Mel, Couro, Ambar, Musgo de Carvalho", descripcion: "Aroma icónico ultra-masculino con ricos acordes de almizcle animal, cilantro, musgo de roble e incienso." },
-            "leternite_m": { nombre: "L'Eternite Men", inspiredBy: "Eternity For Men", reference: "Calvin Klein", precio: 1590, genero: "Masculino", intensidad: "Intenso", familia: "Amadeirado", topNotes: "Lavanda, Tangerina, Bergamota, Limão", heartNotes: "Coentro, Lirio, Flor de Laranjeira, Bagas de Zimbro, Jasmim, Salvia", baseNotes: "Sandalo, Ambar, Almiscar, Vetiver, Pau-Brasil", descripcion: "El refrescante clásico de mandarina cítrica, lavanda noble, salvia fresca y maderas de sándalo." },
-            "malik_nuit": { nombre: "Malik de Nuit", inspiredBy: "Club de Nuit Man", reference: "Armaf", precio: 1690, genero: "Masculino", intensidad: "Intenso", familia: "Aromático Frutado", topNotes: "Limão, Abacaxi, Groselha Preta, Bergamota, Maçã", heartNotes: "Bétula, Jasmim, Rosa", baseNotes: "Almíscar, Âmbar Cinzento, Patchouli, Baunilha", descripcion: "Fresco e imponente aroma de limón de Amalfi ahumado, piña dulce jugosa y almizcle noble de reyes." },
-            "man_m": { nombre: "Man", inspiredBy: "Armani Pour Homme", reference: "Giorgio Armani", precio: 1590, genero: "Masculino", intensidad: "Intenso", familia: "Refrescante", topNotes: "Mandarina, Laranja Verde, Manjericão, Bergamota, Limão", heartNotes: "Noz-moscada, Cravo, Lirio, Canela, Lavanda, Jasmim", baseNotes: "Sandalo, Patchouli, Almiscar, Musgo de Carvalho, Cedro, Vetiver", descripcion: "Elegancia clásica italiana: cítricos de sol, sutil de albahaca picante y ricas maderas aromáticas." },
-            "nights_men": { nombre: "Night Men", inspiredBy: "La Nuit de L'Homme", reference: "Yves Saint Laurent", precio: 1590, genero: "Masculino", intensidad: "Moderado", familia: "Amadeirado", topNotes: "Cardamomo", heartNotes: "Lavanda, Cedro da Virginia, Bergamota", baseNotes: "Alcaparra, Vetiver", descripcion: "Atracción nocturna absoluta basada en rico cardamomo oriental picante, cedro noble de Virginia y lavanda." },
-            "pole_sports": { nombre: "Pole Sports", inspiredBy: "Polo Sport", reference: "Ralph Lauren", precio: 1590, genero: "Masculino", intensidad: "Suave", familia: "Refrescante", topNotes: "Hortelä, Aldeidos, Lavanda, Tangerina, Artemisia, Bergamota", heartNotes: "Gengibre, Grama verde, Jasmim, Geranio, Pau-Rosa", baseNotes: "Almiscar, Sandalo, Cedro, Madeira Guaiac, Ambar", descripcion: "Brillante rocío matutino deportivo cargado de menta piperita silvestre, jengibre picante y almizcles limpios." },
-            "radical_sport": { nombre: "Radical Sport", inspiredBy: "Boss Bottled", reference: "Hugo Boss", precio: 1590, genero: "Masculino", intensidad: "Suave", familia: "Amadeirado", topNotes: "Maçã, Ameixa, Limão, Bergamota, Musgo de Carvalho, Gerânio", heartNotes: "Canela, Caoba, Cravo", baseNotes: "Baunilha, Sândalo, Cedro, Vetiver, Oliveira", descripcion: "Deliciosa tarta de manzana asada con canela, clavo de olor aromático, caoba y sándalo refinado." },
-            "red_man": { nombre: "Red Man", inspiredBy: "Polo Red", reference: "Ralph Lauren", precio: 1590, genero: "Masculino", intensidad: "Intenso", familia: "Amadeirado", topNotes: "Toronja Vermelha, Arando, Limão de Amalfi", heartNotes: "Açafrão, Sálvia", baseNotes: "Madeira Vermelha, Âmbar, Café", descripcion: "Aroma ardiente de jugosa toronja roja italiana, ricas bayas de café tostado de montaña y maderas rojas." },
-            "rock_m": { nombre: "Rock", inspiredBy: "Le Male", reference: "Jean Paul Gaultier", precio: 1590, genero: "Masculino", intensidad: "Intenso", familia: "Refrescante", topNotes: "Hortelã, Lavanda, Artemísia, Bergamota, Cardamomo", heartNotes: "Alcarávia, Flor de Laranjeira, Canela", baseNotes: "Baunilha, Fava Tonka, Âmbar, Sândalo, Cedro", descripcion: "Clásico y sensual aroma masculino de menta helada de jardín, flores de lavanda aromática y vainilla." },
-            "satisfaction": { nombre: "Satisfaction", inspiredBy: "Euphoria Men", reference: "Calvin Klein", precio: 1590, genero: "Masculino", intensidad: "Moderado", familia: "Amadeirado", topNotes: "Gengibre, Pimenta", heartNotes: "Manjericão Preto, Sálvia, Cedro", baseNotes: "Âmbar, Patchouli, Sequóia, Camurça", descripcion: "Fragancia de jengibre picante fresco, albahaca negra silvestre, notas de cuero suave y madera de secuoya." },
-            "silver_m": { nombre: "Silver", inspiredBy: "Silver Scent", reference: "Jacques Bogart", precio: 1590, genero: "Masculino", intensidad: "Moderado", familia: "Amadeirado", topNotes: "Flor de Laranjeira, Limão", heartNotes: "Alecrim, Noz-moscada, Coentro, Lavanda, Gerânio, Cardamomo", baseNotes: "Lichia, Fava Tonka, Madeira de Teca, Vetiver", descripcion: "Luminoso aroma de lichia dulce silvestre combinada con azahar brillante y maderas ricas de teca." },
-            "smell_men": { nombre: "Smell For Men", inspiredBy: "Black XS", reference: "Paco Rabanne", precio: 1590, genero: "Masculino", intensidad: "Moderado", familia: "Amadeirado", topNotes: "Limão, Salvia", heartNotes: "Praliné, Canela, Bálsamo de Tolú, Cardamomo Preto", baseNotes: "Palo Santo, Patchouli, Âmbar Negro", descripcion: "Sensual mezcla rockera de limón cítrico brillante de entrada, praliné dulce fundido y palo santo dulce." },
-            "strong_m": { nombre: "Strong", inspiredBy: "Azzaro Pour Homme", reference: "Azzaro", precio: 1590, genero: "Masculino", intensidad: "Intenso", familia: "Refrescante", topNotes: "Lavanda, Anis Estrelado, Erva-doce, Manjericão, Alcarávia, Bergamota", heartNotes: "Sândalo, Vetiver, Patchouli, Cardamomo, Cedro, Bagas de Zimbro", baseNotes: "Couro, Musgo de Carvalho, Âmbar, Almíscar, Fava Tonka", descripcion: "La máxima expresión de masculinidad clásica mediterránea: lavanda noble aromática, anís y cuero." },
-            "sublime_m": { nombre: "Sublime", inspiredBy: "Explorer", reference: "Montblanc", precio: 1590, genero: "Masculino", intensidad: "Suave", familia: "Amadeirado", topNotes: "Bergamota, Pimenta Rosa, Sálvia", heartNotes: "Vetiver de Haiti, Couro", baseNotes: "Ambroxan, Cacau, Patchouli, Madeira de Akigala", descripcion: "Aventura olfativa excepcional de bergamota italiana jugosa, cacao rico y vetiver profundo de Haití." },
-            "tedd": { nombre: "Tedd", inspiredBy: "Azzaro Wanted", reference: "Azzaro", precio: 1590, genero: "Masculino", intensidad: "Moderado", familia: "Refrescante", topNotes: "Limão, Gengibre, Lavanda, Hortelã", heartNotes: "Cardamomo, Maçã, Gerânio, Zimbro", baseNotes: "Vetiver do Haiti, Fava Tonka, Madeira de Âmbar", descripcion: "Aroma atrevido de limón de Amalfi espumoso, jengibre fresco picante y haba tonka de brasil dulce." },
-            "tom_mister_m": { nombre: "Tom Mister", inspiredBy: "Oud Wood", reference: "Tom Ford", precio: 1690, genero: "Masculino", intensidad: "Intenso", familia: "Amadeirado", topNotes: "Pimenta Chinesa, Cardamomo", heartNotes: "Madeira de Oud, Sândalo, Vetiver", baseNotes: "Fava Tonka, Baunilha, Âmbar", descripcion: "Exclusivo aroma de preciosa madera de oud aromática mística, sándalo cremoso, ámbar y vainilla." },
-            "trust_m": { nombre: "Trust", inspiredBy: "Aventus", reference: "Creed", precio: 1690, genero: "Masculino", intensidad: "Moderado", familia: "Refrescante", topNotes: "Abacaxi, Groselha Preta, Maçã, Bergamota", heartNotes: "Bétula, Patchouli, Jasmim de Marrocos, Rosa", baseNotes: "Almíscar, Musgo de Carvalho, Âmbar Cinzento, Baunilha", descripcion: "El aroma imperial de reyes: piña dulce real jugosa combinada con abedul ahumado y musgo noble." }
-        };
-
-        let currentEditingId = null; 
-        let globalProducts = {};
+        let rawInventory = {};
+        let currentEditingId = null;
         let currentSearchQuery = "";
-        let currentGenreFilter = "all";
+        let currentGenreFilter = "Todos";
 
-        // Elementos UI del Formulario
         const perfumeForm = document.getElementById('perfume-form');
         const formTitle = document.getElementById('form-title');
         const btnSubmit = document.getElementById('btn-submit');
         const btnCancel = document.getElementById('btn-cancel');
-        const templateSelect = document.getElementById('template-select');
-        const inventoryListContainer = document.getElementById('admin-inventory-list');
 
         const inputNombre = document.getElementById('p-nombre');
-        const inputInspired = document.getElementById('p-inspired');
-        const inputReference = document.getElementById('p-reference');
+        const inputGenero = document.getElementById('p-genero');
         const inputPrecio = document.getElementById('p-precio');
         const inputStock = document.getElementById('p-stock');
-        const inputGenero = document.getElementById('p-genero');
-        const inputIntensidad = document.getElementById('p-intensidad');
-        const inputFamilia = document.getElementById('p-familia');
-        const inputTopNotes = document.getElementById('p-topNotes');
-        const inputHeartNotes = document.getElementById('p-heartNotes');
-        const inputBaseNotes = document.getElementById('p-baseNotes');
         const inputFoto = document.getElementById('p-foto');
         const inputDescripcion = document.getElementById('p-descripcion');
 
-        // Elementos UI Publicidad
-        const publicidadForm = document.getElementById('publicidad-form');
-        const inputPubFoto = document.getElementById('pub-foto');
-        const inputPubLink = document.getElementById('pub-link');
-        const inputPubActivo = document.getElementById('pub-activo');
-
-        // ==========================================
-        // CAPA DE NOTIFICACIÓN DE ALERTAS & MODALES LUXURY (Reemplazo de alert)
-        // ==========================================
-        const toast = document.getElementById('toast-notification');
-        const toastIcon = document.getElementById('toast-icon');
-        const toastMsg = document.getElementById('toast-message');
-
-        function showLuxuryNotification(text, type = "success") {
-            toastMsg.innerText = text;
-            if (type === "success") {
-                toastIcon.innerText = "✓";
-                toast.style.borderLeftColor = "var(--accent-green)";
-            } else if (type === "error") {
-                toastIcon.innerText = "✕";
-                toast.style.borderLeftColor = "var(--accent-red)";
-            } else {
-                toastIcon.innerText = "🔔";
-                toast.style.borderLeftColor = "var(--accent-gold)";
-            }
-            
-            toast.classList.remove('opacity-0', '-translate-y-24', 'scale-95');
-            toast.classList.add('opacity-100', 'translate-y-0', 'scale-100');
-            
-            setTimeout(() => {
-                toast.classList.remove('opacity-100', 'translate-y-0', 'scale-100');
-                toast.classList.add('opacity-0', '-translate-y-24', 'scale-95');
-            }, 3000);
-        }
-
-        // Sistema de modal de confirmación dinámico (Reemplazo de confirm)
-        const confirmModal = document.getElementById('confirm-modal');
-        const confirmModalText = document.getElementById('confirm-modal-text');
-        const btnConfirmCancel = document.getElementById('btn-confirm-cancel');
-        const btnConfirmAction = document.getElementById('btn-confirm-action');
-        let onConfirmSuccess = null;
-
-        function showLuxuryConfirm(message, onConfirm) {
-            confirmModalText.innerText = message;
-            onConfirmSuccess = onConfirm;
-            confirmModal.classList.remove('hidden');
-        }
-
-        btnConfirmCancel.addEventListener('click', () => {
-            confirmModal.classList.add('hidden');
-            onConfirmSuccess = null;
-        });
-
-        btnConfirmAction.addEventListener('click', () => {
-            if (typeof onConfirmSuccess === 'function') {
-                onConfirmSuccess();
-            }
-            confirmModal.classList.add('hidden');
-        });
-
-
-        // ==========================================
-        // LÓGICA DE PUBLICIDAD
-        // ==========================================
-        onValue(publicidadRef, (snapshot) => {
-            if (snapshot.exists()) {
-                const data = snapshot.val();
-                inputPubFoto.value = data.fotoUrl || '';
-                inputPubLink.value = data.link || '';
-                inputPubActivo.checked = data.activo || false;
-
-                const pubStatBadge = document.getElementById('stat-pub-status');
-                if (data.activo) {
-                    pubStatBadge.innerText = "Activo en Catálogo";
-                    pubStatBadge.className = "text-xs font-bold text-black bg-[#30d158] px-2.5 py-1 rounded-lg w-max";
-                } else {
-                    pubStatBadge.innerText = "Pausado";
-                    pubStatBadge.className = "text-xs font-bold text-neutral-400 bg-white/5 border border-white/10 px-2.5 py-1 rounded-lg w-max";
-                }
-            }
-        });
-
-        publicidadForm.addEventListener('submit', async (e) => {
+        perfumeForm.addEventListener('submit', (e) => {
             e.preventDefault();
-            try {
-                await set(publicidadRef, {
-                    fotoUrl: inputPubFoto.value.trim(),
-                    link: inputPubLink.value.trim(),
-                    activo: inputPubActivo.checked
-                });
-                showLuxuryNotification("¡Espacio publicitario actualizado correctamente!");
-            } catch (err) {
-                console.error(err);
-                showLuxuryNotification("Error crítico al actualizar banner de publicidad", "error");
-            }
+            
+            const perfumeId = currentEditingId ? currentEditingId : 'id_' + Date.now();
+            const payload = {
+                nombre: inputNombre.value.trim(),
+                genero: inputGenero.value,
+                precio: parseInt(inputPrecio.value),
+                stock: parseInt(inputStock.value),
+                fotoUrl: inputFoto.value.trim(),
+                descripcion: inputDescripcion.value.trim()
+            };
+
+            set(ref(db, `perfumes/${perfumeId}`), payload)
+                .then(() => {
+                    resetearFormulario();
+                })
+                .catch(err => console.error("Error al persistir cambios", err));
         });
 
-
-        // ==========================================
-        // AUTOCOMPLETADO / PLANTILLAS DESDE EL PDF
-        // ==========================================
-        function populateTemplatesDropdown() {
-            Object.keys(MASTER_CATALOG).forEach(key => {
-                const item = MASTER_CATALOG[key];
-                const option = document.createElement('option');
-                option.value = key;
-                option.innerText = `${item.nombre} (Inspirado: ${item.inspiredBy})`;
-                templateSelect.appendChild(option);
-            });
-        }
-        populateTemplatesDropdown();
-
-        // Al seleccionar una plantilla Amakha del PDF, rellenar el panel
-        templateSelect.addEventListener('change', (e) => {
-            const selectId = e.target.value;
-            if (!selectId) return;
-
-            const t = MASTER_CATALOG[selectId];
-            if (t) {
-                inputNombre.value = t.nombre || '';
-                inputInspired.value = t.inspiredBy || '';
-                inputReference.value = t.reference || '';
-                inputPrecio.value = t.precio || '';
-                inputGenero.value = t.genero || 'Femenino';
-                inputIntensidad.value = t.intensidad || 'Moderado';
-                inputFamilia.value = t.familia || '';
-                inputTopNotes.value = t.topNotes || '';
-                inputHeartNotes.value = t.heartNotes || '';
-                inputBaseNotes.value = t.baseNotes || '';
-                inputDescripcion.value = t.descripcion || '';
-                
-                showLuxuryNotification(`Plantilla de "${t.nombre}" cargada con éxito.`);
-            }
-        });
-
-
-        // ==========================================
-        // LÓGICA DE ACTUALIZACIÓN DE ESTADÍSTICAS
-        // ==========================================
-        function calculateStats(products) {
-            const keys = Object.keys(products);
-            let totalValuation = 0;
-            let lowStockCount = 0;
-            let totalCount = keys.length;
-
-            keys.forEach(id => {
-                const item = products[id];
-                const stock = item.stock || 0;
-                const price = item.precio || 0;
-                
-                totalValuation += (price * stock);
-                if (stock <= 3) {
-                    lowStockCount++;
-                }
-            });
-
-            document.getElementById('stat-total-perfumes').innerText = totalCount;
-            document.getElementById('stat-total-valuation').innerText = `$${totalValuation.toLocaleString()}`;
-            document.getElementById('stat-low-stock').innerText = lowStockCount;
-        }
-
-
-        // ==========================================
-        // RENDERIZAR LISTADO DE INVENTARIO
-        // ==========================================
         onValue(perfumesRef, (snapshot) => {
-            inventoryListContainer.innerHTML = '';
             if (!snapshot.exists()) {
-                inventoryListContainer.innerHTML = `
-                    <div class="col-span-full py-16 text-center text-neutral-400">
-                        <p class="text-lg font-bold">La base de datos está vacía</p>
-                        <p class="text-xs mt-1">Usa el formulario superior para añadir tu primer perfume oficial.</p>
-                    </div>
-                `;
-                globalProducts = {};
-                calculateStats({});
+                document.getElementById('admin-inventory-list').innerHTML = '<p class="text-zinc-500 text-xs py-4 text-center col-span-full">No existen registros en el sistema.</p>';
+                rawInventory = {};
                 return;
             }
-
-            globalProducts = snapshot.val();
-            calculateStats(globalProducts);
+            rawInventory = snapshot.val();
             renderFilteredInventory();
         });
 
+        // ESCUCHADOR REAL-TIME DE RESERVAS ACTUALIZADO
+        onValue(reservasRef, (snapshot) => {
+            const contenedorReservas = document.getElementById('contenedor-reservas');
+            contenedorReservas.innerHTML = '';
+
+            if (!snapshot.exists()) {
+                contenedorReservas.innerHTML = '<p class="text-zinc-500 text-sm col-span-full py-2">No hay pedidos bajo reserva registrados de momento.</p>';
+                return;
+            }
+
+            const datosReservas = snapshot.val();
+            Object.keys(datosReservas).forEach((idReserva) => {
+                const reserva = datosReservas[idReserva];
+                const fechaLegible = new Date(reserva.fecha).toLocaleString();
+
+                // Extraer información detallada del cliente si existe
+                const clienteNombre = reserva.cliente || "Cliente No Registrado";
+                const clienteTelefono = reserva.telefono || "Sin Teléfono";
+
+                let productosHtml = '';
+                
+                // Evaluar si los datos vienen estructurados como array (index_3.html) o como objeto antiguo
+                if (reserva.items && Array.isArray(reserva.items)) {
+                    reserva.items.forEach(item => {
+                        productosHtml += `
+                            <li class="flex justify-between items-center bg-zinc-950/50 p-2 rounded-lg border border-zinc-800/40 text-xs">
+                                <span class="text-zinc-100 font-medium">${item.nombre}</span>
+                                <span class="text-purple-300 font-bold bg-purple-950/60 px-2 py-0.5 rounded border border-purple-900/40">Cant: ${item.cantidad}</span>
+                            </li>
+                        `;
+                    });
+                } else if (reserva.perfumeNombre) {
+                    productosHtml = `
+                        <li class="flex justify-between items-center bg-zinc-950/50 p-2 rounded-lg border border-zinc-800/40 text-xs">
+                            <span class="text-zinc-100 font-medium">${reserva.perfumeNombre}</span>
+                            <span class="text-purple-300 font-bold bg-purple-950/60 px-2 py-0.5 rounded border border-purple-900/40">Cant: ${reserva.cantidad || 1}</span>
+                        </li>
+                    `;
+                }
+
+                const cajaReserva = document.createElement('div');
+                cajaReserva.className = "bg-zinc-900/60 border border-purple-900/30 rounded-xl p-4 flex flex-col justify-between space-y-3 shadow-md";
+                cajaReserva.innerHTML = `
+                    <div>
+                        <div class="flex items-center justify-between border-b border-zinc-800/80 pb-2">
+                            <span class="text-[11px] text-zinc-400 font-mono">${fechaLegible}</span>
+                            <select onchange="window.amp_actualizarEstadoReserva('${idReserva}', this.value)" class="bg-purple-950 text-purple-300 border border-purple-800/60 text-[11px] font-bold px-2 py-0.5 rounded focus:outline-none cursor-pointer">
+                                <option value="Pendiente" ${reserva.estado === 'Pendiente' ? 'selected' : ''}>Pendiente</option>
+                                <option value="Completado" ${reserva.estado === 'Completado' ? 'selected' : ''}>Completado</option>
+                                <option value="Cancelado" ${reserva.estado === 'Cancelado' ? 'selected' : ''}>Cancelado</option>
+                            </select>
+                        </div>
+                        <div class="mt-2 text-xs space-y-0.5 bg-zinc-950/30 p-2 rounded-lg border border-zinc-800/50">
+                            <p class="text-zinc-300"><span class="text-zinc-500">Comprador:</span> <strong class="text-amber-200">${clienteNombre}</strong></p>
+                            <p class="text-zinc-300"><span class="text-zinc-500">Contacto:</span> <span class="text-zinc-400 font-mono">${clienteTelefono}</span></p>
+                        </div>
+                        <ul class="mt-3 space-y-1.5">
+                            ${productosHtml}
+                        </ul>
+                    </div>
+                    <div class="border-t border-zinc-800/60 pt-2 flex flex-col space-y-2">
+                        <div class="flex items-center justify-between text-xs">
+                            <span class="text-zinc-400">${reserva.metodoEntrega}</span>
+                            <span class="text-amber-300 font-extrabold text-sm">$${reserva.total}</span>
+                        </div>
+                        <button onclick="window.amp_eliminarReserva('${idReserva}')" class="w-full text-center bg-zinc-950 hover:bg-red-950/30 text-zinc-500 hover:text-red-400 text-[10px] py-1 rounded border border-zinc-900 transition-colors">
+                            Archivar Pedido
+                        </button>
+                    </div>
+                `;
+                contenedorReservas.appendChild(cajaReserva);
+            });
+        });
+
+        // Cambiar el estado de la reserva en Firebase
+        window.amp_actualizarEstadoReserva = function(idReserva, nuevoEstado) {
+            update(ref(db, `reservas/${idReserva}`), { estado: nuevoEstado })
+                .catch(err => console.error("Error al actualizar estado de la reserva:", err));
+        };
+
+        // Eliminar/Archivar la reserva de la base de datos
+        window.amp_eliminarReserva = function(idReserva) {
+            if (confirm("¿Estás seguro de que deseas archivar/eliminar esta reserva permanentemente del sistema?")) {
+                remove(ref(db, `reservas/${idReserva}`)).catch(err => console.error(err));
+            }
+        };
+
         function renderFilteredInventory() {
-            inventoryListContainer.innerHTML = '';
-            const keys = Object.keys(globalProducts);
-            let renderedCount = 0;
+            const container = document.getElementById('admin-inventory-list');
+            container.innerHTML = '';
 
-            keys.forEach((id) => {
-                const p = globalProducts[id];
-                
-                // Aplicar filtros de búsqueda
-                const matchSearch = p.nombre.toLowerCase().includes(currentSearchQuery.toLowerCase()) || 
-                                    (p.inspiredBy && p.inspiredBy.toLowerCase().includes(currentSearchQuery.toLowerCase())) ||
-                                    (p.familia && p.familia.toLowerCase().includes(currentSearchQuery.toLowerCase()));
-                
-                const matchGenre = (currentGenreFilter === "all" || p.genero === currentGenreFilter);
+            const keys = Object.keys(rawInventory);
+            let totalMostrado = 0;
 
-                if (!matchSearch || !matchGenre) return;
+            keys.forEach(id => {
+                const item = rawInventory[id];
+                const matchesSearch = item.nombre.toLowerCase().includes(currentSearchQuery.toLowerCase());
+                const matchesGenre = currentGenreFilter === "Todos" || item.genero === currentGenreFilter;
 
-                renderedCount++;
-                const card = document.createElement('div');
-                card.className = 'glass-panel p-4 rounded-2xl flex flex-col justify-between gap-4 animate-fade-in relative overflow-hidden';
-                
-                // Color identificador según el género del perfume
-                let genderColor = 'border-l-4 border-l-[#ff85a1]'; // Femenino (Rosa)
-                if (p.genero === 'Masculino') genderColor = 'border-l-4 border-l-[#0a84ff]'; // Masculino (Azul)
-                if (p.genero === 'Unissex') genderColor = 'border-l-4 border-l-[#06d6a0]'; // Unisex
-                if (p.genero === 'Infantil') genderColor = 'border-l-4 border-l-[#fee082]'; // Infantil
+                if (matchesSearch && matchesGenre) {
+                    totalMostrado++;
+                    const itemCard = document.createElement('div');
+                    itemCard.className = "bg-zinc-900/40 border border-zinc-800 rounded-xl p-4 flex flex-col justify-between";
+                    
+                    const itemStockColor = item.stock === 0 ? 'text-red-400 font-bold bg-red-950/40' : 'text-zinc-300 bg-zinc-950';
 
-                card.className += ` ${genderColor}`;
-
-                // Arte holográfico abstracto premium
-                const gradientType = p.genero === "Femenino" ? "from-[#ff85a1] to-[#3c096c]" : "from-[#0077b6] to-[#09090b]";
-                const bgIcon = `
-                    <div class="w-12 h-12 rounded-xl bg-gradient-to-br ${gradientType} flex items-center justify-center font-black text-white/50 text-xs flex-shrink-0 relative overflow-hidden">
-                        ${p.nombre.substring(0, 3).toUpperCase()}
-                    </div>
-                `;
-
-                const isLowStock = p.stock <= 3;
-                const stockBadgeClass = isLowStock ? 'bg-[#ff453a]/25 text-[#ff453a]' : 'bg-[#30d158]/20 text-[#30d158]';
-                const stockAlertClass = isLowStock ? 'text-[#ff453a] font-black' : 'text-white font-bold';
-
-                card.innerHTML = `
-                    <div class="flex gap-3">
-                        ${p.fotoUrl ? `
-                            <div class="w-12 h-12 rounded-xl border border-white/10 overflow-hidden flex-shrink-0">
-                                <img src="${p.fotoUrl}" class="w-full h-full object-cover" onerror="this.onerror=null; this.src='https://placehold.co/100x100/16161a/fee082?text=${p.nombre.substring(0,2)}';">
+                    itemCard.innerHTML = `
+                        <div>
+                            <div class="flex items-center justify-between mb-2">
+                                <span class="text-[10px] font-bold uppercase tracking-wider text-zinc-500">${item.genero}</span>
+                                <span class="text-xs px-2 py-1 rounded border border-zinc-800 ${itemStockColor}">Stock: ${item.stock} u.</span>
                             </div>
-                        ` : bgIcon}
-                        <div class="min-width-0 flex-1">
-                            <span class="text-[10px] uppercase font-bold tracking-wider text-neutral-400 block">${p.genero} • ${p.familia || 'Perfume'}</span>
-                            <h4 class="text-sm font-black text-white truncate mt-0.5" title="${p.nombre}">${p.nombre}</h4>
-                            <p class="text-xs text-[#fee082] font-semibold mt-0.5">Precio: $${p.precio}</p>
-                            ${p.inspiredBy ? `<p class="text-[10px] text-neutral-500 mt-1">Inspiración: ${p.inspiredBy}</p>` : ''}
+                            <h4 class="text-sm font-bold text-white mb-1 truncate">${item.nombre}</h4>
+                            <p class="text-xs text-amber-300 font-bold mb-3">$${item.precio}</p>
                         </div>
-                    </div>
-
-                    <div class="flex items-center justify-between bg-black/40 p-2.5 rounded-xl border border-white/5">
-                        <div class="flex items-center gap-2">
-                            <span class="text-[10px] font-bold text-neutral-400">STOCK:</span>
-                            <button class="w-6 h-6 rounded bg-white/5 hover:bg-white/10 text-white font-black flex items-center justify-center text-xs" onclick="window.amp_quickStock('${id}', -1)">-</button>
-                            <span class="text-xs px-2 min-w-6 text-center ${stockAlertClass}">${p.stock}</span>
-                            <button class="w-6 h-6 rounded bg-white/5 hover:bg-white/10 text-white font-black flex items-center justify-center text-xs" onclick="window.amp_quickStock('${id}', 1)">+</button>
+                        <div class="flex items-center gap-2 border-t border-zinc-800/60 pt-3">
+                            <button onclick="window.amp_editPerfume('${id}')" class="flex-1 bg-zinc-800 hover:bg-zinc-700 text-white text-xs font-semibold py-2 rounded-lg transition-all">Editar</button>
+                            <button onclick="window.amp_deletePerfume('${id}')" class="bg-red-950/40 hover:bg-red-900/40 text-red-400 border border-red-900/50 text-xs font-semibold py-2 px-3 rounded-lg transition-all">Eliminar</button>
+                            <div class="flex flex-col gap-1">
+                                <button onclick="window.amp_quickStock('${id}', 1)" class="bg-zinc-950 border border-zinc-800 text-white font-black text-xs px-2.5 py-0.5 rounded hover:bg-zinc-800">+</button>
+                                <button onclick="window.amp_quickStock('${id}', -1)" class="bg-zinc-950 border border-zinc-800 text-white font-black text-xs px-2.5 py-0.5 rounded hover:bg-zinc-800">-</button>
+                            </div>
                         </div>
-                        <span class="text-[9px] px-2 py-0.5 rounded font-black ${stockBadgeClass}">
-                            ${p.stock === 0 ? 'AGOTADO' : isLowStock ? 'CRÍTICO' : 'DISPONIBLE'}
-                        </span>
-                    </div>
-
-                    <div class="flex gap-2 pt-2 border-t border-white/5">
-                        <button class="flex-1 py-1.5 bg-white/5 hover:bg-white/10 hover:text-white rounded-lg text-[10px] font-bold text-neutral-400 tracking-wider uppercase transition-all" onclick="window.amp_startEdit('${id}')">
-                            ✏️ Editar Ficha
-                        </button>
-                        <button class="px-3 py-1.5 bg-[#ff453a]/10 hover:bg-[#ff453a]/25 text-[#ff453a] rounded-lg text-[10px] font-bold tracking-wider uppercase transition-all" onclick="window.amp_deleteProduct('${id}')">
-                            🗑️
-                        </button>
-                    </div>
-                `;
-                inventoryListContainer.appendChild(card);
+                    `;
+                    container.appendChild(itemCard);
+                }
             });
 
-            if (renderedCount === 0) {
-                inventoryListContainer.innerHTML = `
-                    <div class="col-span-full py-16 text-center text-neutral-400">
-                        <p class="text-sm font-semibold">No se encontraron perfumes para los criterios de filtrado actuales.</p>
-                    </div>
-                `;
+            if (totalMostrado === 0) {
+                container.innerHTML = '<p class="text-zinc-500 text-xs py-4 text-center col-span-full">Ningún perfume coincide con los filtros aplicados.</p>';
             }
         }
 
-
-        // ==========================================
-        // PROCESAR FORMULARIO (CREAR O EDITAR)
-        // ==========================================
-        perfumeForm.addEventListener('submit', async (e) => {
-            e.preventDefault();
-
-            const datosPerfume = {
-                nombre: inputNombre.value.trim(),
-                inspiredBy: inputInspired.value.trim() || "",
-                reference: inputReference.value.trim() || "",
-                precio: parseFloat(inputPrecio.value) || 0,
-                stock: parseInt(inputStock.value) || 0,
-                genero: inputGenero.value,
-                intensidad: inputIntensidad.value,
-                familia: inputFamilia.value.trim(),
-                topNotes: inputTopNotes.value.trim() || "",
-                heartNotes: inputHeartNotes.value.trim() || "",
-                baseNotes: inputBaseNotes.value.trim() || "",
-                fotoUrl: inputFoto.value.trim() || "",
-                descripcion: inputDescripcion.value.trim() || ""
-            };
-
-            try {
-                if (currentEditingId) {
-                    const itemRef = ref(db, `perfumes/${currentEditingId}`);
-                    await set(itemRef, datosPerfume);
-                    showLuxuryNotification(`Ficha de "${datosPerfume.nombre}" actualizada con éxito.`);
-                } else {
-                    const nuevoPerfumeRef = push(perfumesRef);
-                    await set(nuevoPerfumeRef, datosPerfume);
-                    showLuxuryNotification(`"${datosPerfume.nombre}" agregado al catálogo correctamente.`);
-                }
-                resetearFormulario();
-            } catch (err) {
-                console.error(err);
-                showLuxuryNotification("Fallo crítico guardando los datos del perfume", "error");
-            }
-        });
-
-
-        // ==========================================
-        // ACCIONES: EDITAR, ELIMINAR, STOCK RÁPIDO
-        // ==========================================
-        window.amp_startEdit = function(id) {
-            const p = globalProducts[id];
-            if (!p) return;
-
+        window.amp_editPerfume = function(id) {
             currentEditingId = id;
-            formTitle.innerText = "Modificar Perfume";
-            btnSubmit.innerText = "Guardar Cambios";
+            const item = rawInventory[id];
+            if (!item) return;
+
+            inputNombre.value = item.nombre;
+            inputGenero.value = item.genero;
+            inputPrecio.value = item.precio;
+            inputStock.value = item.stock;
+            inputFoto.value = item.fotoUrl || "";
+            inputDescripcion.value = item.descripcion || "";
+
+            formTitle.innerText = "Modificar Perfume Existente";
+            btnSubmit.innerText = "Actualizar Registro";
             btnCancel.style.display = "block";
-
-            // Rellenar todos los campos extendidos
-            inputNombre.value = p.nombre || '';
-            inputInspired.value = p.inspiredBy || '';
-            inputReference.value = p.reference || '';
-            inputPrecio.value = p.precio || '';
-            inputStock.value = p.stock || '';
-            inputGenero.value = p.genero || 'Femenino';
-            inputIntensidad.value = p.intensidad || 'Moderado';
-            inputFamilia.value = p.familia || '';
-            inputTopNotes.value = p.topNotes || '';
-            inputHeartNotes.value = p.heartNotes || '';
-            inputBaseNotes.value = p.baseNotes || '';
-            inputFoto.value = p.fotoUrl || '';
-            inputDescripcion.value = p.descripcion || '';
-
-            // Hacer scroll suave hacia la sección del formulario de edición
-            window.scrollTo({ top: document.getElementById('form-title').offsetTop - 120, behavior: 'smooth' });
+            window.scrollTo({ top: 0, behavior: 'smooth' });
         };
 
-        window.amp_deleteProduct = function(id) {
-            const p = globalProducts[id];
-            if (!p) return;
-
-            showLuxuryConfirm(`¿Estás completamente seguro de que quieres eliminar la fragancia "${p.nombre}" del catálogo Amakha Paris 360?`, async () => {
-                try {
-                    const itemRef = ref(db, `perfumes/${id}`);
-                    await remove(itemRef);
-                    showLuxuryNotification(`El perfume "${p.nombre}" ha sido eliminado.`);
-                    if (currentEditingId === id) resetearFormulario();
-                } catch (err) {
-                    showLuxuryNotification("Error al intentar eliminar el producto", "error");
-                }
-            });
+        window.amp_deletePerfume = function(id) {
+            if (confirm("¿Estás plenamente seguro de eliminar esta fragancia del catálogo permanente?")) {
+                remove(ref(db, `perfumes/${id}`)).catch(err => console.error(err));
+            }
         };
 
         window.amp_quickStock = async function(id, cambio) {
-            const stockRef = ref(db, `perfumes/${id}/stock`);
+            const targetRef = ref(db, `perfumes/${id}/stock`);
             try {
-                await runTransaction(stockRef, (currentStock) => {
+                await runTransaction(targetRef, (currentStock) => {
                     if (currentStock === null) return 0;
                     const nuevoStock = currentStock + cambio;
                     return nuevoStock < 0 ? 0 : nuevoStock;
                 });
             } catch (err) {
-                console.error("Error al actualizar stock rápido", err);
-                showLuxuryNotification("Error al procesar el cambio de stock", "error");
+                console.error(err);
             }
         };
 
-
-        // ==========================================
-        // CONTROL DE BÚSQUEDA Y FILTRADO
-        // ==========================================
         const searchBar = document.getElementById('admin-search-bar');
         const genreFilter = document.getElementById('admin-genre-filter');
 
@@ -902,13 +363,11 @@
             renderFilteredInventory();
         });
 
-        // Cancelar edición de un perfume
         btnCancel.addEventListener('click', resetearFormulario);
 
         function resetearFormulario() {
             currentEditingId = null;
             perfumeForm.reset();
-            templateSelect.value = "";
             formTitle.innerText = "Agregar Nuevo Perfume";
             btnSubmit.innerText = "Guardar Perfume";
             btnCancel.style.display = "none";
